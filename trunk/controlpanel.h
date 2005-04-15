@@ -16,6 +16,8 @@ class ControlPanel
   ~ControlPanel();
 
   void start();
+
+  void addControl(ControlObject *);
 };
 
 #endif // __CONTROLPANEL_H

@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -g
-OBJS = main.o keymanager.o eventdispatcher.o
+CFLAGS = -Wall -g -DDEBUG
+OBJS = main.o keymanager.o eventdispatcher.o control.o controlpanel.o eventmanager.o tab.o
 LIBS = -lstdc++
 
 .SUFFIXES: .cpp .o

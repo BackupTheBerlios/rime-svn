@@ -2,6 +2,9 @@
 
 #include <pthread.h>
 
+#include <iostream>
+using namespace std;
+
 KeyManager::KeyManager()
 {
   // TODO:
@@ -42,4 +45,9 @@ void * KeyManager::start_FORKED(void * pvKeyManager)
   pKeyManager->start();
 
   return NULL;
+}
+
+void KeyManager::start()
+{
+  cout << "KeyManager::start()!";
 }

@@ -1,12 +1,22 @@
 #include "controlpanel.h"
+#include "tab.h"
+
+#include <iostream>
+using namespace std;
 
 ControlPanel::ControlPanel()
 {
+#ifdef DEBUG
+  cout << "ControlPanel::ControlPanel()" << endl;
+#endif
+
   pEd = new EventDispatcher();
 
   // TODO: read layout from a file
 
   // TODO: initialize controls
+
+  addControl(new Tab(pEd));
 
   // TODO: initialize event managers
 }
@@ -28,16 +38,21 @@ ControlPanel::~ControlPanel()
 
 void ControlPanel::start()
 {
+  Event ev;
 
   while(true)
     {
       for(list<EventManager *>::iterator it = events.begin(); it != events.end(); it++)
         {
-          if(it->PeekEvent(pEvent, PE_REMOVE))
+          if((*it)->peekEvent(ev, PE_REMOVE))
             {
-              pEd->processEvent(pEvent);
-              delete pEvent;
+              pEd->processEvent(ev);
             }
         }
     }
+}
+
+void ControlPanel::addControl(ControlObject * pCtrl)
+{
+  controls.push_back(pCtrl);
 }

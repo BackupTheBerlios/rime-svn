@@ -11,7 +11,7 @@ class KeyManager : public EventManager
 
   virtual bool peekEvent(Event *&, PEAction );
 
-  virtual void start(void *);
+  virtual void start();
 
   virtual void start_FORK();
   static void * start_FORKED(void *);

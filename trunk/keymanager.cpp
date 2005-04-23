@@ -1,6 +1,7 @@
 #include "keymanager.h"
 
 #include <pthread.h>
+#include <curses.h>
 
 #include <iostream>
 using namespace std;
@@ -9,6 +10,7 @@ KeyManager::KeyManager()
 {
   // TODO:
 
+  cout << "KeyManager::KeyManager()" << endl;
   start_FORK();
 }
 
@@ -16,25 +18,11 @@ KeyManager::~KeyManager()
 {
 }
 
-bool KeyManager::peekEvent(Event *& pEv, PEAction action)
-{
-  if(!events.empty())
-    {
-      pEv = events.front();
-
-      if(action == PE_REMOVE)
-        events.pop();
-
-      return true;
-    }
-
-  return false;
-}
-
 void KeyManager::start_FORK()
 {
   pthread_t thread;
- 
+
+  cout << "KeyManager::start_FORK()" << endl;
   pthread_create(&thread, NULL, start_FORKED, (void *) this);
 }
 
@@ -49,5 +37,5 @@ void * KeyManager::start_FORKED(void * pvKeyManager)
 
 void KeyManager::start()
 {
-  cout << "KeyManager::start()!";
+  cout << "KeyManager::start()!" << endl;
 }

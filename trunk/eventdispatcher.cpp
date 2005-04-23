@@ -4,6 +4,10 @@ using namespace std;
 
 #include "eventdispatcher.h"
 
+EventDispatcher::~EventDispatcher()
+{
+}
+
 int EventDispatcher::processEvent(Event & e)
 {
   // TODO:

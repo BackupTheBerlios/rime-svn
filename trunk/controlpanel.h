@@ -9,7 +9,7 @@ class ControlPanel
  private:
   EventDispatcher * pEd;
   list<ControlObject *> controls;
-  list<EventManager *> events;
+  list<EventManager *> eventMgrs;
 
  public:
   ControlPanel();
@@ -18,6 +18,7 @@ class ControlPanel
   void start();
 
   void addControl(ControlObject *);
+  void addEventManager(EventManager *);
 };
 
 #endif // __CONTROLPANEL_H

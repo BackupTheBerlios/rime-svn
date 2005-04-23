@@ -13,9 +13,6 @@ class ControlObject : public DrawableObject, public EventHandlerObject
   RECT bounds;
  public:
 
-  virtual void draw();
-  virtual int processEvent(Event &);
-
   ControlObject(EventDispatcher *);
   virtual ~ControlObject();
   

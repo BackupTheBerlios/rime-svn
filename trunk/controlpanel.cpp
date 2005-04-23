@@ -1,8 +1,11 @@
 #include "controlpanel.h"
 #include "tab.h"
+#include "keymanager.h"
 
 #include <iostream>
 using namespace std;
+
+#define DEBUG
 
 ControlPanel::ControlPanel()
 {
@@ -19,11 +22,13 @@ ControlPanel::ControlPanel()
   addControl(new Tab(pEd));
 
   // TODO: initialize event managers
+
+  addEventManager(new KeyManager());
 }
 
 ControlPanel::~ControlPanel()
 {
-  for(list<EventManager *>::iterator it = events.begin(); it != events.end(); it++)
+  for(list<EventManager *>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
     {
       delete *it;
     }
@@ -42,7 +47,7 @@ void ControlPanel::start()
 
   while(true)
     {
-      for(list<EventManager *>::iterator it = events.begin(); it != events.end(); it++)
+      for(list<EventManager *>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
         {
           if((*it)->peekEvent(ev, PE_REMOVE))
             {
@@ -55,4 +60,9 @@ void ControlPanel::start()
 void ControlPanel::addControl(ControlObject * pCtrl)
 {
   controls.push_back(pCtrl);
+}
+
+void ControlPanel::addEventManager(EventManager * pEvMgr)
+{
+  eventMgrs.push_back(pEvMgr);
 }

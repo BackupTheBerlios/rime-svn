@@ -11,15 +11,14 @@ enum PEAction {PE_KEEP, PE_REMOVE};
 class EventManager
 {
  protected:
-  queue<Event *> events;
+  queue<Event> events;
  public:
   EventManager();
   virtual ~EventManager();
 
-  virtual bool peekEvent(Event &, PEAction) = 0;
+  virtual bool peekEvent(Event &, PEAction);
 
   virtual void start() = 0;
-  virtual void start_FORK() = 0;
 };
 
 #endif // __EVENTMANAGER_H

@@ -9,8 +9,6 @@ class KeyManager : public EventManager
   KeyManager();
   ~KeyManager();
 
-  virtual bool peekEvent(Event *&, PEAction );
-
   virtual void start();
 
   virtual void start_FORK();

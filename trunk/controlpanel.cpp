@@ -2,6 +2,8 @@
 #include "tab.h"
 #include "keymanager.h"
 
+#include <curses.h>
+
 #include <iostream>
 using namespace std;
 
@@ -24,6 +26,14 @@ ControlPanel::ControlPanel()
   // TODO: initialize event managers
 
   addEventManager(new KeyManager());
+
+  // TODO: initialise CURSES
+
+  initscr();
+  keypad(stdscr, TRUE);
+  nonl();
+  cbreak();
+  noecho();
 }
 
 ControlPanel::~ControlPanel()
@@ -39,6 +49,10 @@ ControlPanel::~ControlPanel()
     }
 
   delete pEd;
+
+  // CURSES cleanup
+
+  endwin();
 }
 
 void ControlPanel::start()

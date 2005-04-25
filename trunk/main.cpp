@@ -5,16 +5,13 @@
 
 using namespace std ;
 
-
 int main(int  argc , char** argv )
 {
   ofstream slog("rime.log");
   if(slog.is_open())
     clog.rdbuf(slog.rdbuf());
 
-  ControlPanel cp;
-
-  cp.start();
+  ControlPanel::cPanel.start();
 
   return 0;
 }

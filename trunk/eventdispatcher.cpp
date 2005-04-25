@@ -3,6 +3,7 @@
 using namespace std;
 
 #include "eventdispatcher.h"
+#include "controlpanel.h"
 
 EventDispatcher::~EventDispatcher()
 {
@@ -11,6 +12,15 @@ EventDispatcher::~EventDispatcher()
 int EventDispatcher::processEvent(Event & e)
 {
   // TODO:
+  switch(e.getType())
+    {
+    case Event::EV_CHARACTER:
+      if(e.getValue() == 27)
+        {
+          ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
+        }
+      break;
+    }
 
   return 0;
 }

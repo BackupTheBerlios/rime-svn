@@ -10,10 +10,12 @@ using namespace std;
 
 #define DEBUG
 
+ControlPanel ControlPanel::cPanel;
+
 ControlPanel::ControlPanel()
 {
 #ifdef DEBUG
-  cout << "ControlPanel::ControlPanel()" << endl;
+  clog << "ControlPanel::ControlPanel()" << endl;
 #endif
 
   pEd = new EventDispatcher();
@@ -34,7 +36,6 @@ ControlPanel::ControlPanel()
   keypad(stdscr, TRUE);
   nonl();
   cbreak();
-  noecho();
 }
 
 ControlPanel::~ControlPanel()
@@ -60,12 +61,15 @@ void ControlPanel::start()
 {
   Event ev;
 
-  while(true)
+  while(state != CP_DONE)
     {
       for(list<EventManager *>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
         {
           if((*it)->peekEvent(ev, PE_REMOVE))
             {
+#ifdef DEBUG
+              clog << "Event found!" << endl;
+#endif
               pEd->processEvent(ev);
             }
         }
@@ -80,4 +84,9 @@ void ControlPanel::addControl(ControlObject * pCtrl)
 void ControlPanel::addEventManager(EventManager * pEvMgr)
 {
   eventMgrs.push_back(pEvMgr);
+}
+
+void ControlPanel::setState(states state)
+{
+  this->state = state;
 }

@@ -12,7 +12,9 @@ KeyManager::KeyManager()
 {
   // TODO:
 
-  cout << "KeyManager::KeyManager()" << endl;
+#ifdef DEBUG
+  clog << "KeyManager::KeyManager()" << endl;
+#endif
   start_FORK();
 }
 
@@ -24,7 +26,9 @@ void KeyManager::start_FORK()
 {
   pthread_t thread;
 
-  cout << "KeyManager::start_FORK()" << endl;
+#ifdef DEBUG
+  clog << "KeyManager::start_FORK()" << endl;
+#endif
   pthread_create(&thread, NULL, start_FORKED, (void *) this);
 }
 
@@ -39,7 +43,9 @@ void * KeyManager::start_FORKED(void * pvKeyManager)
 
 void KeyManager::start()
 {
-  cout << "KeyManager::start()!" << endl;
+#ifdef DEBUG
+  clog << "KeyManager::start()!" << endl;
+#endif
 
   while(true)
     {
@@ -47,7 +53,9 @@ void KeyManager::start()
 
       Event ev(Event::EV_CHARACTER, ch);
       events.push(ev);
-      
+
+#ifdef DEBUG      
       clog << "Pushed event : " << ev << endl;
+#endif
     }
 }

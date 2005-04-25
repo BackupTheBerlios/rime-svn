@@ -10,11 +10,15 @@ Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
 
 void Tab::draw()
 {
-  cout << "Tab::Draw()" << endl;
+#ifdef DEBUG
+  clog << "Tab::Draw()" << endl;
+#endif
 }
 
 int Tab::processEvent(Event & ev)
 {
-  cout << "Event::type = " << ev.getType() << "; Event::value = " << ev.getValue() << endl;
+#ifdef DEBUG
+  clog << "Event::type = " << ev.getType() << "; Event::value = " << ev.getValue() << endl;
+#endif
   return 0;
 }

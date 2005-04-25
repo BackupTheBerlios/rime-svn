@@ -17,6 +17,7 @@ class ControlObject : public DrawableObject, public EventHandlerObject
   virtual ~ControlObject();
   
   RECT getBounds();
+  void setBounds(RECT );
 };
 
 #endif // __CONTROL_H

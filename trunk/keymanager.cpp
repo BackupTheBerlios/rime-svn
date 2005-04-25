@@ -38,4 +38,11 @@ void * KeyManager::start_FORKED(void * pvKeyManager)
 void KeyManager::start()
 {
   cout << "KeyManager::start()!" << endl;
+
+  while(true)
+    {
+      int ch = getch();
+
+      events.push(Event(Event::EV_CHARACTER, ch));
+    }
 }

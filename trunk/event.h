@@ -3,8 +3,16 @@
 
 class Event
 {
+ public:
+  enum types {EV_UNKNOWN, EV_CHARACTER, EV_CLICK};
+
  private:
-  int type;
+  types type;
+  int value;
+ public:
+
+  Event();
+  Event(types, int);
 };
 
 #endif

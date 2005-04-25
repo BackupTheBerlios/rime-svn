@@ -8,10 +8,10 @@
 
 class Tab: public ControlObject
 {
- public:
   Buffer * pBuffer;  
-  RECT size;
+  int cursor;
 
+ public:
   Tab(EventDispatcher *);
 
   virtual void draw();

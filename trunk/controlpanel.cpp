@@ -1,6 +1,7 @@
 #include "controlpanel.h"
 #include "tab.h"
 #include "keymanager.h"
+#include "event.h"
 
 #include <curses.h>
 

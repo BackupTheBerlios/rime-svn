@@ -1,6 +1,10 @@
 #ifndef __EVENT_H
 #define __EVENT_H
 
+#include <iostream>
+
+using namespace std;
+
 class Event
 {
  public:
@@ -9,10 +13,15 @@ class Event
  private:
   types type;
   int value;
- public:
 
+ public:
   Event();
   Event(types, int);
+
+  types getType() const;
+  int getValue() const;
 };
+
+ostream & operator << (ostream &, const Event &);
 
 #endif

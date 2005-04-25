@@ -1,4 +1,6 @@
 #include "keymanager.h"
+#include "event.h"
+#include "globals.h"
 
 #include <pthread.h>
 #include <curses.h>
@@ -43,6 +45,9 @@ void KeyManager::start()
     {
       int ch = getch();
 
-      events.push(Event(Event::EV_CHARACTER, ch));
+      Event ev(Event::EV_CHARACTER, ch);
+      events.push(ev);
+      
+      clog << "Pushed event : " << ev << endl;
     }
 }

@@ -4,7 +4,6 @@
 AC_PREREQ(2.59)
 AC_INIT([rime], [0.1], [cmihai@gmail.com])
 AC_CONFIG_SRCDIR([eventdispatcher.cpp])
-AC_CONFIG_HEADER([config.h])
 
 AC_CONFIG_FILES([Makefile])
 

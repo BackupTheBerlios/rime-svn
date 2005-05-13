@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <curses.h>
 
 #include <algorithm>
 
@@ -23,9 +24,13 @@ int EventDispatcher::processEvent(Event & e)
           ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
         }
 
-      assert(currentControl != NULL);
-
-      currentControl->processEvent(e);
+      if(currentControl != NULL)
+        currentControl->processEvent(e);
+      else
+        {
+          printw("Cannot!");
+          refresh();
+        }
 
       break;
     }
@@ -38,10 +43,9 @@ int EventDispatcher::addTarget(ControlObject * target)
   if(find(objects.begin(), objects.end(), target) == objects.end())
     {
       objects.push_back(target);
+      setCurrentControl(target);
       return 0;
     }
-
-  setCurrentControl(target);
 
   return 1;
 }

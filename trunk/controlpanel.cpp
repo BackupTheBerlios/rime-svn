@@ -10,7 +10,6 @@ using namespace std;
 
 #define DEBUG
 
-
 //KeyManager *pManager = new KeyManager();
 
 ControlPanel ControlPanel::cPanel;
@@ -26,7 +25,7 @@ ControlPanel::ControlPanel()
   nonl();
   noecho();
   cbreak();
-
+  
   pEd = new EventDispatcher();
 
   // TODO: read layout from a file
@@ -35,16 +34,10 @@ ControlPanel::ControlPanel()
 
   addControl(new Tab(pEd));
 
-// TODO: initialize event managers
+  // TODO: initialize event managers
 
-//  addEventManager( pManager  );
- 
   KeyManager * pKeyMgr = new KeyManager();
-  pKeyMgr->start();
-
-  // TODO: initialise CURSES
-
-
+  addEventManager(pKeyMgr);
 }
 
 ControlPanel::~ControlPanel()
@@ -63,7 +56,7 @@ ControlPanel::~ControlPanel()
 
   // CURSES cleanup
 
-  endwin();
+  //  endwin();
 }
 
 void ControlPanel::start()

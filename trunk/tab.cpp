@@ -21,7 +21,9 @@ int Tab::processEvent(Event & ev)
 {
 #ifdef DEBUG
   clog << "Event::type = " << ev.getType() << "; Event::value = " << ev.getValue() << endl;
+  
   addch('X');
+  refresh();
 #endif
   return 0;
 }

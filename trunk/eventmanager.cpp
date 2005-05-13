@@ -17,5 +17,7 @@ bool EventManager::peekEvent(Event & ev, PEAction pa)
 
   if(pa == PE_REMOVE)
     events.pop();
+
+  return true;
 }
 

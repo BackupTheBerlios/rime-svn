@@ -3,18 +3,16 @@
 
 #include "eventmanager.h"
 
-class KeyManager 
+class KeyManager : public EventManager
 {
  public:
- 
-   KeyManager(){}
+   KeyManager();
   ~KeyManager(){}
 
-  static void start();
-  
-  static void*  start_FORKED(void *);  
-  
-  static queue<Event> events;
+  virtual void start();
+  void start_FORK();
+
+  static void* start_FORKED(void *); 
 };
 
 #endif // __KEYMANAGER_H

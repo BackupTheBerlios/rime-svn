@@ -13,6 +13,9 @@ class  EventDispatcher : public EventHandlerObject
 {
  private:
   list<ControlObject *> objects;
+  ControlObject * currentControl;
+
+  void setCurrentControl(ControlObject *);
 
  public:
   virtual int processEvent(Event &);

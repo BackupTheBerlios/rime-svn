@@ -1,6 +1,8 @@
 #include "tab.h"
 #include "event.h"
 
+#include <curses.h>
+
 #include <iostream>
 using namespace std;
 
@@ -19,6 +21,7 @@ int Tab::processEvent(Event & ev)
 {
 #ifdef DEBUG
   clog << "Event::type = " << ev.getType() << "; Event::value = " << ev.getValue() << endl;
+  addch('X');
 #endif
   return 0;
 }

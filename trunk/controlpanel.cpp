@@ -24,6 +24,7 @@ ControlPanel::ControlPanel()
   initscr();
   keypad(stdscr, TRUE);
   nonl();
+  noecho();
   cbreak();
 
   pEd = new EventDispatcher();
@@ -38,7 +39,8 @@ ControlPanel::ControlPanel()
 
 //  addEventManager( pManager  );
  
-    KeyManager::start() ;
+  KeyManager * pKeyMgr = new KeyManager();
+  pKeyMgr->start();
 
   // TODO: initialise CURSES
 

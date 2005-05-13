@@ -1,7 +1,10 @@
+#include <assert.h>
+
 #include <algorithm>
 
 using namespace std;
 
+#include "control.h"
 #include "eventdispatcher.h"
 #include "controlpanel.h"
 
@@ -19,6 +22,11 @@ int EventDispatcher::processEvent(Event & e)
         {
           ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
         }
+
+      assert(currentControl != NULL);
+
+      currentControl->processEvent(e);
+
       break;
     }
 
@@ -33,6 +41,8 @@ int EventDispatcher::addTarget(ControlObject * target)
       return 0;
     }
 
+  setCurrentControl(target);
+
   return 1;
 }
 
@@ -40,4 +50,9 @@ int EventDispatcher::removeTarget(ControlObject * target)
 {
   objects.remove(target);
   return 0;
+}
+
+void EventDispatcher::setCurrentControl(ControlObject * target)
+{
+  currentControl = target;
 }

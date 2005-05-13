@@ -10,6 +10,9 @@ using namespace std;
 
 #define DEBUG
 
+
+//KeyManager *pManager = new KeyManager();
+
 ControlPanel ControlPanel::cPanel;
 
 ControlPanel::ControlPanel()
@@ -17,6 +20,11 @@ ControlPanel::ControlPanel()
 #ifdef DEBUG
   clog << "ControlPanel::ControlPanel()" << endl;
 #endif
+
+  initscr();
+  keypad(stdscr, TRUE);
+  nonl();
+  cbreak();
 
   pEd = new EventDispatcher();
 
@@ -26,16 +34,15 @@ ControlPanel::ControlPanel()
 
   addControl(new Tab(pEd));
 
-  // TODO: initialize event managers
+// TODO: initialize event managers
 
-  addEventManager(new KeyManager());
+//  addEventManager( pManager  );
+ 
+    KeyManager::start() ;
 
   // TODO: initialise CURSES
 
-  initscr();
-  keypad(stdscr, TRUE);
-  nonl();
-  cbreak();
+
 }
 
 ControlPanel::~ControlPanel()

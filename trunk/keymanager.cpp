@@ -8,54 +8,33 @@
 #include <iostream>
 using namespace std;
 
-KeyManager::KeyManager()
-{
-  // TODO:
 
-#ifdef DEBUG
-  clog << "KeyManager::KeyManager()" << endl;
-#endif
-  start_FORK();
-}
-
-KeyManager::~KeyManager()
-{
-}
-
-void KeyManager::start_FORK()
-{
-  pthread_t thread;
-
-#ifdef DEBUG
-  clog << "KeyManager::start_FORK()" << endl;
-#endif
-  pthread_create(&thread, NULL, start_FORKED, (void *) this);
-}
-
-void * KeyManager::start_FORKED(void * pvKeyManager)
-{
-  KeyManager * pKeyManager = (KeyManager *) pvKeyManager;
-
-  pKeyManager->start();
-
-  return NULL;
-}
+queue<Event> KeyManager::events ;
 
 void KeyManager::start()
 {
-#ifdef DEBUG
-  clog << "KeyManager::start()!" << endl;
-#endif
 
+  pthread_t thread;
+  pthread_create( &thread, NULL, start_FORKED,  0);
+  
+}
+
+
+
+void * KeyManager::start_FORKED(void * pvKeyManager)
+{ 
+  
   while(true)
     {
-      int ch = getch();
-
-      Event ev(Event::EV_CHARACTER, ch);
-      events.push(ev);
-
-#ifdef DEBUG      
-      clog << "Pushed event : " << ev << endl;
-#endif
+       int ch  = getch() ;       
+       
+       Event ev( Event::EV_CHARACTER, ch);       
+       events.push(ev);        
+       
+       //sleep( 1 ) ;
     }
+    
+    
+  return NULL;
 }
+

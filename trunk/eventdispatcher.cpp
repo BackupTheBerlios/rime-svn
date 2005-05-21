@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <curses.h>
+#include <menu.h>
 
 #include <algorithm>
 
@@ -8,6 +9,10 @@ using namespace std;
 #include "control.h"
 #include "eventdispatcher.h"
 #include "controlpanel.h"
+#include "menu.h"
+
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
+
 
 EventDispatcher::~EventDispatcher()
 {
@@ -23,7 +28,27 @@ int EventDispatcher::processEvent(Event & e)
         {
           ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
         }
-
+	
+      if(e.getValue() == 266) ///daca s-a apasat tasta F2 pentru accesare meniu
+        {
+	  ///desenare meniu    
+	  clog<<" afisare meniu ";
+	// Menu::meniu.draw();	  
+	  
+	}
+    
+      if(e.getValue()==13)
+        clog<<(char)13<<(char)10;
+	
+      if( (e.getValue()>=32) && (e.getValue()<=127) )
+      {
+        ///caractere tiparibile
+	
+	
+	clog<<(char)e.getValue();
+	
+	
+      }
       if(currentControl != NULL)
         currentControl->processEvent(e);
       else

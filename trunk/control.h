@@ -1,15 +1,17 @@
 #ifndef __CONTROL_H
 #define __CONTROL_H
 
+
 #include "drawable.h"
 #include "eventhandler.h"
 #include "globals.h"
 #include "eventdispatcher.h"
 
+
 class ControlObject : public DrawableObject, public EventHandlerObject
 {
  private:
-  EventDispatcher * pDisp;
+    EventDispatcher * pDisp;
   RECT bounds;
  public:
 

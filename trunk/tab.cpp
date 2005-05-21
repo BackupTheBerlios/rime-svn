@@ -6,6 +6,8 @@
 #include <iostream>
 using namespace std;
 
+#define DEBUG
+
 Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
 {
 }

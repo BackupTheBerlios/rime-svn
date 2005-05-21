@@ -8,16 +8,13 @@
 
 class Menu: public ControlObject
 {
-
  public: 
   Menu();
   
-   
-
- virtual void draw();
- virtual int processEvent(Event &);
+  virtual void draw() { printw("Meniu!"); }
+  virtual int processEvent(Event &);
  
- static Menu meniu;
+  static Menu meniu;
 };
 
 #endif // _MENU_H

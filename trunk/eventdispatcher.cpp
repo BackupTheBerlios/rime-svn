@@ -18,6 +18,7 @@ EventDispatcher::~EventDispatcher()
 {
 }
 
+
 int EventDispatcher::processEvent(Event & e)
 {
   // TODO:
@@ -31,24 +32,11 @@ int EventDispatcher::processEvent(Event & e)
 	
       if(e.getValue() == 266) ///daca s-a apasat tasta F2 pentru accesare meniu
         {
-	  ///desenare meniu    
-	  clog<<" afisare meniu ";
-	// Menu::meniu.draw();	  
-	  
-	}
-    
-      if(e.getValue()==13)
-        clog<<(char)13<<(char)10;
-	
-      if( (e.getValue()>=32) && (e.getValue()<=127) )
-      {
-        ///caractere tiparibile
-	
-	
-	clog<<(char)e.getValue();
-	
-	
-      }
+          ///desenare meniu    
+          clog<<" afisare meniu ";
+          Menu::meniu.draw();	  
+        }
+
       if(currentControl != NULL)
         currentControl->processEvent(e);
       else
@@ -57,6 +45,13 @@ int EventDispatcher::processEvent(Event & e)
           refresh();
         }
 
+      break;
+
+    case Event::EV_REDRAW:
+      for(list<ControlObject *>::iterator it = objects.begin(); it != objects.end(); it++)
+        (*it)->draw();
+
+    default:
       break;
     }
 

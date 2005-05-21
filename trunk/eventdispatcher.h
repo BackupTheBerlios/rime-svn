@@ -8,7 +8,6 @@ using namespace std;
 #include "eventhandler.h"
 
 
-
 class ControlObject;
 
 class  EventDispatcher : public EventHandlerObject

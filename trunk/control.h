@@ -11,8 +11,9 @@
 class ControlObject : public DrawableObject, public EventHandlerObject
 {
  private:
-    EventDispatcher * pDisp;
+  EventDispatcher * pDisp;
   RECT bounds;
+ 
  public:
 
   ControlObject(EventDispatcher *);

@@ -3,6 +3,7 @@
 
 #include "eventdispatcher.h"
 #include "eventmanager.h"
+#include "eventhandler.h"
 
 class ControlPanel
 {
@@ -15,6 +16,8 @@ class ControlPanel
   states state;
 
  public:
+
+  /// The constructor
   ControlPanel();
   ~ControlPanel();
 
@@ -22,7 +25,9 @@ class ControlPanel
   void setState(states);
 
   void addControl(ControlObject *);
+  void addEvent(Event &);
   void addEventManager(EventManager *);
+  int processEvent(Event &) {}
 
   static ControlPanel cPanel;
 };

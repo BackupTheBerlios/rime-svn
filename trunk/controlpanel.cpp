@@ -33,9 +33,12 @@ ControlPanel::ControlPanel()
 
   // TODO: read layout from a file
 
+  
+
   // TODO: initialize controls
 
   addControl(new Tab(pEd));
+  addControl(new Menu(pEd));
 
   // TODO: initialize event managers
 

@@ -85,7 +85,7 @@ void ControlPanel::start()
 
   while(state != CP_DONE)
     {
-      for(list<EventManager *>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
+      for(list<EventManager*>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
         {
           if((*it)->peekEvent(ev, PE_REMOVE))
             {
@@ -100,6 +100,9 @@ void ControlPanel::start()
               pEd->processEvent(ev);
             }    
         }
+
+			for(list<ControlObject*>::iterator it1 = controls.begin(); it1 != controls.end(); it1++)
+        (*it1)->draw();
     }
 }
 

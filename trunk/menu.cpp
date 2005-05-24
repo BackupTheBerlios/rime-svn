@@ -8,9 +8,7 @@
 
 #define ARRAY_SIZE(a) ( sizeof(a) / sizeof(a[0]) )
 
-Menu Menu::meniu;
-
-Menu::Menu()
+Menu::Menu(EventDispatcher * pEd) : ControlObject(pEd)
 {
 }
 
@@ -24,9 +22,8 @@ void Menu::draw()
     ITEM **pMyItems;
     int n_choices, i;
     */
-    
 }
+
 int Menu::processEvent(Event &ev)
 {
-
 }

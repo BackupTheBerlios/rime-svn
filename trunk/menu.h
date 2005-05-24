@@ -9,7 +9,7 @@
 class Menu: public ControlObject
 {
  public: 
-  Menu();
+  Menu(EventDispatcher* );
   
   virtual void draw() { printw("Meniu!"); }
   virtual int processEvent(Event &);

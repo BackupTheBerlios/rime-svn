@@ -11,10 +11,8 @@ class Menu: public ControlObject
  public: 
   Menu(EventDispatcher* );
   
-  virtual void draw() { printw("Meniu!"); }
+  virtual void draw();
   virtual int processEvent(Event &);
- 
-  static Menu meniu;
 };
 
 #endif // _MENU_H

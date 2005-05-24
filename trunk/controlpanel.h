@@ -5,7 +5,7 @@
 #include "eventmanager.h"
 #include "eventhandler.h"
 
-class ControlPanel
+class ControlPanel : public EventManager
 {
  public:
   enum states {CP_WORKING, CP_DONE};
@@ -28,6 +28,7 @@ class ControlPanel
   void addEvent(Event &);
   void addEventManager(EventManager *);
   int processEvent(Event &) {}
+	int pushEvent(const Event & ev) { events.push(ev); }
 
   static ControlPanel cPanel;
 };

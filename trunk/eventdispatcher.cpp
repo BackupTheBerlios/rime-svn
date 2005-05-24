@@ -33,8 +33,7 @@ int EventDispatcher::processEvent(Event & e)
       if(e.getValue() == 266) ///daca s-a apasat tasta F2 pentru accesare meniu
         {
           ///desenare meniu    
-          clog<<" afisare meniu ";
-          Menu::meniu.draw();	  
+					ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW, 0));
         }
 
       if(currentControl != NULL)

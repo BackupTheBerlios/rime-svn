@@ -44,6 +44,7 @@ ControlPanel::ControlPanel()
 
   KeyManager * pKeyMgr = new KeyManager();
   addEventManager(pKeyMgr);
+  addEventManager(this);
 }
 
 ControlPanel::~ControlPanel()
@@ -100,9 +101,6 @@ void ControlPanel::start()
               pEd->processEvent(ev);
             }    
         }
-
-			for(list<ControlObject*>::iterator it1 = controls.begin(); it1 != controls.end(); it1++)
-        (*it1)->draw();
     }
 }
 

@@ -1,10 +1,11 @@
 #ifndef __MENU_H
 #define __MENU_H
 
-#include <menu.h>
 #include <curses.h>
+#include <menu.h>
 
 #include "control.h"
+
 
 class Menu: public ControlObject
 {

@@ -27,10 +27,6 @@ int EventDispatcher::processEvent(const Event & e)
     case Event::EV_CHARACTER:
       switch(e.getValue())
         {
-        case 27:
-          ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
-          break;
-	
         default:
           if(currentControl != NULL)
             {
@@ -48,7 +44,11 @@ int EventDispatcher::processEvent(const Event & e)
       for(list<ControlObject *>::iterator it = objects.begin(); it != objects.end(); it++)
         (*it)->draw();
 
-      refresh();
+      doupdate();
+      break;
+
+    case Event::EV_QUIT:
+      ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
       break;
 
     default:

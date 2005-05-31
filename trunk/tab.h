@@ -12,7 +12,6 @@ class Tab: public ControlObject
 {
   Buffer * pBuffer;  
   POINT cursor;
-  WINDOW * win;
 
  public:
   Tab(EventDispatcher *);

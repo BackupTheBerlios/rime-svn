@@ -9,20 +9,15 @@
 #include <string.h>
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 #define DEBUG
-
-//KeyManager *pManager = new KeyManager();
 
 ControlPanel ControlPanel::cPanel;
 
 ControlPanel::ControlPanel()
 {
-#ifdef DEBUG
-  clog << "ControlPanel::ControlPanel()" << endl;
-#endif
-
   initscr();
   keypad(stdscr, TRUE);
   nonl();
@@ -37,14 +32,16 @@ ControlPanel::ControlPanel()
 
   // TODO: initialize controls
 
-  addControl(new Menu(pEd));
   addControl(new Tab(pEd));
+  addControl(new Menu(pEd));
 
   // TODO: initialize event managers
 
   KeyManager * pKeyMgr = new KeyManager();
   addEventManager(pKeyMgr);
   addEventManager(this);
+  
+  pushEvent(Event(Event::EV_REDRAW, 0));
 }
 
 ControlPanel::~ControlPanel()
@@ -60,7 +57,7 @@ ControlPanel::~ControlPanel()
       delete *it;
     }
 
-  delete pEd;
+ delete pEd;
 
   // CURSES cleanup
 
@@ -71,17 +68,6 @@ void ControlPanel::start()
 {
   Event ev;
   //  Menu *pMenu;
-  
-  WINDOW *pMyMenuWin;
-  pMyMenuWin = newwin(0,COLS-1,LINES-1,0);
-  refresh();
-  keypad(pMyMenuWin, TRUE);
-  wmove(pMyMenuWin,0,0);
-  wrefresh(pMyMenuWin);
-  mvwprintw(pMyMenuWin,0,0,"F2-Menu");
-  wrefresh(pMyMenuWin);
-  wmove(stdscr,1,0);
-  refresh();
 
   while(state != CP_DONE)
     {

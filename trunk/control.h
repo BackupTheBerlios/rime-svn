@@ -1,6 +1,7 @@
 #ifndef __CONTROL_H
 #define __CONTROL_H
 
+#include <curses.h>
 
 #include "drawable.h"
 #include "eventhandler.h"
@@ -10,9 +11,10 @@
 
 class ControlObject : public DrawableObject, public EventHandlerObject
 {
- private:
+ protected:
   EventDispatcher * pDisp;
   RECT bounds;
+  WINDOW * win;
  
  public:
 

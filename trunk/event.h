@@ -8,7 +8,7 @@ using namespace std;
 class Event
 {
  public:
-  enum types {EV_UNKNOWN, EV_CHARACTER, EV_CLICK, EV_REDRAW};
+  enum types {EV_UNKNOWN, EV_CHARACTER, EV_CLICK, EV_REDRAW, EV_QUIT};
 
  private:
   types type;

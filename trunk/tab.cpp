@@ -13,7 +13,7 @@ using namespace std;
 
 Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
 {
-  win = newwin(COLS, LINES-1, 0, 0);
+  win = newwin(COLS, LINES-1, 0, 1);
   pBuffer = new Buffer;
 
    if(win == NULL)
@@ -28,6 +28,7 @@ Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
 
 Tab::~Tab()
 {
+  delete pBuffer;
   delwin(win);
 }
 
@@ -38,9 +39,11 @@ void Tab::draw()
        vector<char> & l = pBuffer->lines[i];
        for(vector<char>::iterator it = l.begin(); it != l.end(); it++)
          {
-           mvaddch(i, distance<vector<char>::iterator>(l.begin(), it), *it);
+           mvwaddch(win, i, distance<vector<char>::iterator>(l.begin(), it), *it);
          }
      }
+
+  wnoutrefresh(win);
 }
 
 int Tab::processEvent(const Event & ev)

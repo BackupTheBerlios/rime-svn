@@ -7,75 +7,78 @@
 
 #include "menu.h"
 #include "control.h"
-
-#define ARRAY_SIZE(a) ( sizeof(a) / sizeof(a[0]) )
-
+#include "controlpanel.h"
 
 Menu::Menu(EventDispatcher * pEd) : ControlObject(pEd)
 {
+  choices.push_back("Choice 1");
+  choices.push_back("Choice 2");
+  choices.push_back("Quit");
+
+  
+  pMyItems = (ITEM**)calloc(choices.size() + 1, sizeof(ITEM*));
+    
+  for(unsigned int i = 0; i < choices.size(); i++)
+	pMyItems[i] = new_item(choices[i].c_str(), "");
+	
+  pMyItems[choices.size()] = (ITEM*)NULL;
+  pMyMenu = new_menu((ITEM**)pMyItems);
+  refresh();
+  set_menu_format(pMyMenu,1,3);
+  win = newwin(0, COLS, 0, 0);
+  keypad(win,TRUE);
+  set_menu_win(pMyMenu,win);
+  set_menu_mark(pMyMenu,"*");
+    
+  post_menu(pMyMenu);
+  stare = "begin";
 }
 
+Menu::~Menu()
+{
+  unpost_menu(pMyMenu);
+  for(unsigned int i = 0; i < choices.size(); i++)    
+  	free_item(pMyItems[i]);
+    
+  free_menu(pMyMenu);
+  refresh();
+}
 void Menu::draw()
 {
-//   char* choices[] = {"Choice 1","Choice 2","Quit"};
-//   int n_choices, i, c, ch = 1;
-//   char stare[20];
-    
-//   WINDOW *pMyMenuWin;
-//   MENU *pMyMenu;
-//   ITEM **pMyItems;
-    
-    
-//   n_choices = ARRAY_SIZE(choices);
-//   pMyItems = (ITEM**)calloc(n_choices+1, sizeof(ITEM*));
-    
-//   for(i=0;i<n_choices;i++)
-// 	pMyItems[i] = new_item(choices[i], "");
-	
-//   pMyItems[n_choices] = (ITEM*)NULL;
-//   pMyMenu = new_menu((ITEM**)pMyItems);
-//   refresh();
-//   set_menu_format(pMyMenu,1,3);
-//   pMyMenuWin = newwin(0,COLS,LINES-1,0);
-//   keypad(pMyMenuWin,TRUE);
-//   set_menu_win(pMyMenu,pMyMenuWin);
-//   set_menu_mark(pMyMenu,"*");
-    
-//   post_menu(pMyMenu);
-//   wrefresh(pMyMenuWin);
-    
-//   strcpy(stare,"begin");
-//   while(strcmp(stare,"Quit") != 0)///cat timp nu s-a ales optiunea "Quit"
-//     {
-//       wrefresh(pMyMenuWin);
-	
-//       c = wgetch(pMyMenuWin);
-	
-//       switch(c)
-//         {
-// 	    case KEY_RIGHT:
-//           menu_driver(pMyMenu,REQ_RIGHT_ITEM);
-//           break;
-		
-// 	    case KEY_LEFT:
-//           menu_driver(pMyMenu,REQ_LEFT_ITEM);
-//           break;
-		
-// 	    case 13: ///daca s-a apasat tasta "Enter"
-//           strcpy(stare,item_name(current_item(pMyMenu)));
-//           break;
-		
-//         }///end switch
-//     }///end while
-//   unpost_menu(pMyMenu);
-//   for(i=0;i<n_choices;i++)    
-// 	free_item(pMyItems[i]);
-    
-//   free_menu(pMyMenu);
-//   refresh();
+  clog << "Menu::draw()" << endl;
+  wrefresh(win);
 }
 
 int Menu::processEvent(const Event &ev)
 {
+  clog << "Got an event" << endl;
+
+  if(ev.getType() == Event::EV_CHARACTER)
+    {
+      clog << "The event is " << ev.getValue() << " != " << KEY_RIGHT << " " << KEY_LEFT << " " << KEY_ENTER << endl;
+      switch(ev.getValue())
+        {
+	    case KEY_RIGHT:
+          menu_driver(pMyMenu,REQ_RIGHT_ITEM);
+          break;
+		
+	    case KEY_LEFT:
+          menu_driver(pMyMenu,REQ_LEFT_ITEM);
+          break;
+		
+	    case 13: ///daca s-a apasat tasta "Enter"
+          stare = item_name(current_item(pMyMenu));
+          break;
+        }
+    }
+
+  if(stare == "Quit")
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT, 0));
+      return 0;
+    }
+
+  ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW, 0));
+  
   return 0;
 }

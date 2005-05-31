@@ -42,6 +42,8 @@ ControlPanel::ControlPanel()
   addEventManager(this);
   
   pushEvent(Event(Event::EV_REDRAW, 0));
+
+  state = CP_WORKING;
 }
 
 ControlPanel::~ControlPanel()

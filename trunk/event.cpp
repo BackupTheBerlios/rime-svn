@@ -25,4 +25,5 @@ int Event::getValue() const
 ostream & operator << (ostream & c, const Event & e)
 {
   c << "Event(" << e.getType() << ", " << e.getValue() << ")";
+  return c;
 }

@@ -19,36 +19,37 @@ EventDispatcher::~EventDispatcher()
 }
 
 
-int EventDispatcher::processEvent(Event & e)
+int EventDispatcher::processEvent(const Event & e)
 {
   // TODO:
   switch(e.getType())
     {
     case Event::EV_CHARACTER:
-      if(e.getValue() == 27)
+      switch(e.getValue())
         {
+        case 27:
           ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
-        }
+          break;
 	
-      if(e.getValue() == 266) ///daca s-a apasat tasta F2 pentru accesare meniu
-        {
-          ///desenare meniu    
-					ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW, 0));
+        default:
+          if(currentControl != NULL)
+            {
+              currentControl->processEvent(e);
+            }
+          else
+            {
+              printw("Cannot!");
+              refresh();
+            }
+          break;
         }
-
-      if(currentControl != NULL)
-        currentControl->processEvent(e);
-      else
-        {
-          printw("Cannot!");
-          refresh();
-        }
-
       break;
-
     case Event::EV_REDRAW:
       for(list<ControlObject *>::iterator it = objects.begin(); it != objects.end(); it++)
         (*it)->draw();
+
+      refresh();
+      break;
 
     default:
       break;

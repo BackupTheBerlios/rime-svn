@@ -27,8 +27,8 @@ class ControlPanel : public EventManager
   void addControl(ControlObject *);
   void addEvent(Event &);
   void addEventManager(EventManager *);
-  int processEvent(Event &) {}
-	int pushEvent(const Event & ev) { events.push(ev); }
+  int processEvent(Event &) { return 0; }
+  int pushEvent(const Event & ev) { events.push(ev); return 0; }
 
   static ControlPanel cPanel;
 };

@@ -5,9 +5,16 @@
 
 using namespace std;
 
+struct POINT
+{
+  unsigned int x, y;
+};
+
 struct RECT
 {
-  int x1, y1, x2, y2;
+  unsigned int x1, y1;
+
+  unsigned int x2, y2;
 };
 
 

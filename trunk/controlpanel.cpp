@@ -37,8 +37,8 @@ ControlPanel::ControlPanel()
 
   // TODO: initialize controls
 
-  addControl(new Tab(pEd));
   addControl(new Menu(pEd));
+  addControl(new Tab(pEd));
 
   // TODO: initialize event managers
 
@@ -51,7 +51,8 @@ ControlPanel::~ControlPanel()
 {
   for(list<EventManager *>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
     {
-      delete *it;
+      if((*it) != (EventManager *) this)
+        delete *it;
     }
 
   for(list<ControlObject *>::iterator it = controls.begin(); it != controls.end(); it++)
@@ -63,15 +64,13 @@ ControlPanel::~ControlPanel()
 
   // CURSES cleanup
 
-  //  endwin();
+  endwin();
 }
 
 void ControlPanel::start()
 {
   Event ev;
-  Menu *pMenu;
-  
-  
+  //  Menu *pMenu;
   
   WINDOW *pMyMenuWin;
   pMyMenuWin = newwin(0,COLS-1,LINES-1,0);
@@ -90,18 +89,14 @@ void ControlPanel::start()
         {
           if((*it)->peekEvent(ev, PE_REMOVE))
             {
-//#ifdef DEBUG
-/*
-
-                clog << (char)ev.getValue();
-//		wrefresh(pMyMenuWin);
-		refresh()
-*/
-//#endif			     
               pEd->processEvent(ev);
             }    
         }
     }
+
+#ifdef DEBUG
+  clog << "ControlPanel is done!!" << endl;
+#endif
 }
 
 void ControlPanel::addControl(ControlObject * pCtrl)

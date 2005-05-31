@@ -6,7 +6,7 @@
 class EventHandlerObject
 {
  public:
-  virtual int processEvent( Event & ) = 0;      
+  virtual int processEvent( const Event & ) = 0;      
 };
 
 #endif // __EVENTHANDLER_H

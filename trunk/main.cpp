@@ -13,6 +13,7 @@ int main(int  argc , char** argv )
     
   ControlPanel::cPanel.start();
 
+  clog << "Main is done!" << endl;
   return 0;
 }
 

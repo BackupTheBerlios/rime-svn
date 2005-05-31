@@ -13,7 +13,7 @@ class Menu: public ControlObject
   Menu(EventDispatcher* );
   
   virtual void draw();
-  virtual int processEvent(Event &);
+  virtual int processEvent(const Event &);
 };
 
 #endif // _MENU_H

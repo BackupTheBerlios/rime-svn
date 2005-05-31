@@ -19,7 +19,7 @@ class  EventDispatcher : public EventHandlerObject
   void setCurrentControl(ControlObject *);
 
  public:
-  virtual int processEvent(Event &);
+  virtual int processEvent(const Event &);
   virtual ~EventDispatcher();
 
   int addTarget(ControlObject *);

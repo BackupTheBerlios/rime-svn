@@ -11,7 +11,7 @@ using namespace std;
 
 #define DEBUG
 
-Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
+Tab::Tab(EventDispatcher * pEd) : ControlObject(pEd)
 {
   getmaxyx(stdscr, lines, cols);
   int win_height = lines - 3;
@@ -28,6 +28,8 @@ Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
        exit(0);
 #endif
      }
+
+   pEd->setTab(this);
 }
 
 Tab::~Tab()

@@ -27,10 +27,11 @@ int EventDispatcher::processEvent(const Event & e)
     case Event::EV_CHARACTER:
       switch(e.getValue())
         {
-        case 27:
-          _temp = _currentControl;
-          _currentControl = _menu;
-          _menu = _temp;
+        case KEY_F(10):
+          if(_currentControl == _tab)
+            _currentControl = _menu;
+          else
+            _currentControl = _tab;
           break;
 
         default:
@@ -64,6 +65,7 @@ int EventDispatcher::processEvent(const Event & e)
   return 0;
 }
 
+
 int EventDispatcher::addTarget(ControlObject * target)
 {
   if(find(objects.begin(), objects.end(), target) == objects.end())
@@ -76,18 +78,27 @@ int EventDispatcher::addTarget(ControlObject * target)
   return 1;
 }
 
+
 int EventDispatcher::removeTarget(ControlObject * target)
 {
   objects.remove(target);
   return 0;
 }
 
+
 void EventDispatcher::setCurrentControl(ControlObject * target)
 {
   _currentControl = target;
 }
 
+
 void EventDispatcher::setMenu(ControlObject * menu)
 {
   _menu = menu;
+}
+
+
+void EventDispatcher::setTab(ControlObject * tab)
+{
+  _tab = tab;
 }

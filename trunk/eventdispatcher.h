@@ -7,7 +7,6 @@ using namespace std;
 
 #include "eventhandler.h"
 
-
 class ControlObject;
 
 class  EventDispatcher : public EventHandlerObject
@@ -15,7 +14,7 @@ class  EventDispatcher : public EventHandlerObject
  private:
   list<ControlObject *> objects;
   ControlObject * _currentControl;
-  ControlObject * _menu, * _temp;
+  ControlObject * _menu, * _tab, * _tabsLine;
 
   void setCurrentControl(ControlObject *);
 
@@ -27,6 +26,7 @@ class  EventDispatcher : public EventHandlerObject
   int removeTarget(ControlObject *);
 
   void setMenu(ControlObject *);
+  void setTab(ControlObject *);
 };
 
 #endif // __EVENTDISPATCHER_H

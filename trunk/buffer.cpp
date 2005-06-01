@@ -23,10 +23,15 @@ int Buffer::add(int ch)
     case KEY_UP:
       if(cursor.y > 0)
         cursor.y--;
+
+      if(cursor.x > lines[cursor.y].size() - 1)
+        cursor.x = lines[cursor.y].size() - 1;
       break;
     case KEY_DOWN:
       if(cursor.y + 1 < lines.size())
         cursor.y++;
+      if(cursor.x > lines[cursor.y].size())
+        cursor.x = lines[cursor.y].size();
       break;
     case KEY_LEFT:
       if(cursor.x > 0)
@@ -35,6 +40,21 @@ int Buffer::add(int ch)
     case KEY_RIGHT:
       if(cursor.x + 1 < lines[cursor.y].size())
         cursor.x++;
+      break;
+    case KEY_HOME:
+      cursor.x = 0;
+      break;
+    case KEY_END:
+      cursor.x = lines[cursor.y].size();
+      break;
+    case KEY_BACKSPACE:
+      if(cursor.x > 0)
+        {
+          itt = lines[cursor.y].begin();
+          advance(itt, cursor.x - 1);
+          lines[cursor.y].erase(itt);
+          cursor.x--;
+        }
       break;
     case 13:
       it = lines.begin();
@@ -53,6 +73,9 @@ int Buffer::add(int ch)
     default:
       if(isprint(ch))
         {
+          if(lines[cursor.y].size() == lines[cursor.y].capacity())
+            lines[cursor.y].reserve(lines[cursor.y].capacity() * 2 + 1);
+
           itt = lines[cursor.y].begin();
           advance(itt, cursor.x);
           lines[cursor.y].insert(itt, (char) ch);

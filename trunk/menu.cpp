@@ -11,10 +11,11 @@
 
 Menu::Menu(EventDispatcher * pEd) : ControlObject(pEd)
 {
+  pEd->setMenu(this);
+
   choices.push_back("Choice 1");
   choices.push_back("Choice 2");
   choices.push_back("Quit");
-
   
   pMyItems = (ITEM**)calloc(choices.size() + 1, sizeof(ITEM*));
     
@@ -74,11 +75,11 @@ int Menu::processEvent(const Event &ev)
 
   if(stare == "Quit")
     {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT, 0));
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT));
       return 0;
     }
 
-  ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW, 0));
+  ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
   
   return 0;
 }

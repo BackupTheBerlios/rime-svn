@@ -25,7 +25,7 @@ int Buffer::add(int ch)
         cursor.y--;
       break;
     case KEY_DOWN:
-      if(cursor.y < lines.size() - 1)
+      if(cursor.y + 1 < lines.size())
         cursor.y++;
       break;
     case KEY_LEFT:
@@ -33,15 +33,15 @@ int Buffer::add(int ch)
         cursor.x--;
       break;
     case KEY_RIGHT:
-      if(cursor.x < lines[cursor.y].size() - 1)
+      if(cursor.x + 1 < lines[cursor.y].size())
         cursor.x++;
       break;
-    case KEY_ENTER:
-      addch('X');
-      it = lines.begin(), it1 = it;
+    case 13:
+      it = lines.begin();
       advance(it, cursor.y);
       itt = it->begin();
       advance(itt, cursor.x);
+      it1 = it;
       it1++;
       lines.insert(it1, vector<char>(0));
       copy(itt, it->end(), it1->end());
@@ -51,10 +51,13 @@ int Buffer::add(int ch)
       break;
 
     default:
-      itt = lines[cursor.y].begin();
-      advance(itt, cursor.x);
-      lines[cursor.y].insert(itt, (char) ch);
-      cursor.x++;
+      if(isprint(ch))
+        {
+          itt = lines[cursor.y].begin();
+          advance(itt, cursor.x);
+          lines[cursor.y].insert(itt, (char) ch);
+          cursor.x++;
+        }
       break;
     }
   return 0;

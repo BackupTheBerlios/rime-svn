@@ -16,7 +16,7 @@ class Event
 
  public:
   Event();
-  Event(types, int);
+  Event(types, int value = 0);
 
   types getType() const;
   int getValue() const;

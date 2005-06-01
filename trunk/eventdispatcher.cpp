@@ -80,3 +80,8 @@ void EventDispatcher::setCurrentControl(ControlObject * target)
 {
   currentControl = target;
 }
+
+void EventDispatcher::setMenu(ControlObject * menu)
+{
+  currentMenu = menu;
+}

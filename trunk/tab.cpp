@@ -13,7 +13,11 @@ using namespace std;
 
 Tab::Tab(EventDispatcher * ed) : ControlObject(ed)
 {
-  win = newwin(COLS, LINES-1, 0, 1);
+  getmaxyx(stdscr, lines, cols);
+  int win_height = lines - 3;
+  int win_width = cols;
+
+  win = newwin(win_height, win_width, 2, 0);
   pBuffer = new Buffer;
 
    if(win == NULL)
@@ -34,15 +38,32 @@ Tab::~Tab()
 
 void Tab::draw()
 {
+  int new_lines, new_cols;
+  getmaxyx(stdscr, new_lines, new_cols);
+  if(new_lines != lines || new_cols != cols)
+    {
+      lines = new_lines;
+      cols = new_cols;
+
+      int win_height = lines - 3;
+      int win_width = cols;
+      
+      wresize(win, win_height, win_width);
+    } 
+
+  werase(win);
+  box(win, 0, 0);
+  
   for(unsigned int i = 0; i < pBuffer->lines.size(); i++)
      {
        vector<char> & l = pBuffer->lines[i];
-       for(vector<char>::iterator it = l.begin(); it != l.end(); it++)
+       for(unsigned int j = 0; j < l.size(); j++)
          {
-           mvwaddch(win, i, distance<vector<char>::iterator>(l.begin(), it), *it);
+           mvwaddch(win, i + 1, j + 1, l[j]);
          }
      }
 
+  wmove(win, pBuffer->cursor.y + 1, pBuffer->cursor.x + 1);
   wnoutrefresh(win);
 }
 
@@ -55,7 +76,7 @@ int Tab::processEvent(const Event & ev)
         {
         default:
           pBuffer->add(ev.getValue());
-          ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW, 0));
+          ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
           break;
         }
       break;

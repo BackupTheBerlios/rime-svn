@@ -32,8 +32,8 @@ ControlPanel::ControlPanel()
 
   // TODO: initialize controls
 
-  addControl(new Tab(pEd));
-  addControl(new Menu(pEd));
+   addControl(new Menu(pEd));
+   addControl(new Tab(pEd));
 
   // TODO: initialize event managers
 
@@ -41,7 +41,7 @@ ControlPanel::ControlPanel()
   addEventManager(pKeyMgr);
   addEventManager(this);
   
-  pushEvent(Event(Event::EV_REDRAW, 0));
+  pushEvent(Event(Event::EV_REDRAW));
 
   state = CP_WORKING;
 }
@@ -69,7 +69,6 @@ ControlPanel::~ControlPanel()
 void ControlPanel::start()
 {
   Event ev;
-  //  Menu *pMenu;
 
   while(state != CP_DONE)
     {

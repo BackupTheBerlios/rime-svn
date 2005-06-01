@@ -15,6 +15,7 @@ class ControlObject : public DrawableObject, public EventHandlerObject
   EventDispatcher * pDisp;
   RECT bounds;
   WINDOW * win;
+  int lines, cols;
  
  public:
 

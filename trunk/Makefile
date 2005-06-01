@@ -7,7 +7,7 @@ CFLAGS = -W -Wall -g
 all: $(OBJS)
 	$(CC) -o rime $(OBJS) $(LDFLAGS)
 
-%.o: %.cpp
+%.o: %.cpp %.h
 	$(CC) $(CFLAGS) -c $<
 
 clean:

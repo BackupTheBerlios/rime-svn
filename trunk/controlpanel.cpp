@@ -32,8 +32,8 @@ ControlPanel::ControlPanel()
 
   // TODO: initialize controls
 
-   addControl(new Menu(pEd));
-   addControl(new Tab(pEd));
+  addControl(new Menu(pEd));
+  addControl(new Tab(pEd));
 
   // TODO: initialize event managers
 

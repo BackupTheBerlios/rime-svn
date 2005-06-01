@@ -27,10 +27,16 @@ int EventDispatcher::processEvent(const Event & e)
     case Event::EV_CHARACTER:
       switch(e.getValue())
         {
+        case 27:
+          _temp = _currentControl;
+          _currentControl = _menu;
+          _menu = _temp;
+          break;
+
         default:
-          if(currentControl != NULL)
+          if(_currentControl != NULL)
             {
-              currentControl->processEvent(e);
+              _currentControl->processEvent(e);
             }
           else
             {
@@ -78,7 +84,7 @@ int EventDispatcher::removeTarget(ControlObject * target)
 
 void EventDispatcher::setCurrentControl(ControlObject * target)
 {
-  currentControl = target;
+  _currentControl = target;
 }
 
 void EventDispatcher::setMenu(ControlObject * menu)

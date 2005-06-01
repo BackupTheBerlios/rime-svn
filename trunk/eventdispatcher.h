@@ -14,9 +14,8 @@ class  EventDispatcher : public EventHandlerObject
 {
  private:
   list<ControlObject *> objects;
-  ControlObject * currentControl;
-
-  ControlObject * _menu;
+  ControlObject * _currentControl;
+  ControlObject * _menu, * _temp;
 
   void setCurrentControl(ControlObject *);
 

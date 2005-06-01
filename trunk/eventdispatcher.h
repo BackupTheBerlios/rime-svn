@@ -16,6 +16,8 @@ class  EventDispatcher : public EventHandlerObject
   list<ControlObject *> objects;
   ControlObject * currentControl;
 
+  ControlObject * _menu;
+
   void setCurrentControl(ControlObject *);
 
  public:
@@ -24,6 +26,8 @@ class  EventDispatcher : public EventHandlerObject
 
   int addTarget(ControlObject *);
   int removeTarget(ControlObject *);
+
+  void setMenu(ControlObject *);
 };
 
 #endif // __EVENTDISPATCHER_H

@@ -83,5 +83,5 @@ void EventDispatcher::setCurrentControl(ControlObject * target)
 
 void EventDispatcher::setMenu(ControlObject * menu)
 {
-  currentMenu = menu;
+  _menu = menu;
 }

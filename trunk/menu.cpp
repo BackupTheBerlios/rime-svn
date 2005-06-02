@@ -9,14 +9,16 @@
 #include "control.h"
 #include "controlpanel.h"
 
-Menu::Menu(EventDispatcher * pEd) : ControlObject(pEd)
+Menu::Menu(EventDispatcher * pEd, vector<string> choices) : ControlObject(pEd)
 {
   pEd->setMenu(this);
-
-  choices.push_back("Choice 1");
-  choices.push_back("Choice 2");
-  choices.push_back("Quit");
-  
+/*
+  choices.push_back("File");
+  choices.push_back("Edit");
+  choices.push_back("View");
+  choices.push_back("Help");  
+ */
+ 
   pMyItems = (ITEM**)calloc(choices.size() + 1, sizeof(ITEM*));
     
   for(unsigned int i = 0; i < choices.size(); i++)
@@ -25,7 +27,7 @@ Menu::Menu(EventDispatcher * pEd) : ControlObject(pEd)
   pMyItems[choices.size()] = (ITEM*)NULL;
   pMyMenu = new_menu((ITEM**)pMyItems);
   refresh();
-  set_menu_format(pMyMenu,1,3);
+  set_menu_format(pMyMenu,1,4);
   win = newwin(0, COLS, 0, 0);
   keypad(win,TRUE);
   set_menu_win(pMyMenu,win);
@@ -77,6 +79,32 @@ int Menu::processEvent(const Event &ev)
     {
       ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT));
       return 0;
+    }
+  if(stare == "File")///accesare File din meniul principal
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE));
+      return 0;
+    }
+  if(stare == "Edit")
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
+      return 0;
+    }    
+  if(stare == "Help")
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_HELP));
+      return 0;
+    }
+    
+///////////////////////////////////////////////////////////////////////////////////////    
+
+  if(stare == "New")///File->New
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_NEW));
+    }
+  if(stare == "<-Back")///iesire din submeniul File si revenire la meniul principal
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_BACK_FILE));
     }
 
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));

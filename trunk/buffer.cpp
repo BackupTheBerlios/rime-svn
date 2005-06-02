@@ -6,6 +6,7 @@ using namespace std;
 
 #include "buffer.h"
 
+
 Buffer::Buffer() : lines(1)
 {
   cursor.x = 0;
@@ -68,7 +69,7 @@ int Buffer::add(int ch)
       it->erase(itt, it->end());
       cursor.y++;
       cursor.x = 0;
-      break;
+      break;          
 
     default:
       if(isprint(ch))

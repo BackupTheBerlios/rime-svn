@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "control.h"
+#include "event.h"
 #include "eventdispatcher.h"
 #include "controlpanel.h"
 #include "menu.h"
@@ -22,6 +23,19 @@ EventDispatcher::~EventDispatcher()
 int EventDispatcher::processEvent(const Event & e)
 {
   // TODO:
+
+  vector<string> choices_file;
+  EventDispatcher *pEvd = new EventDispatcher;      
+  
+  
+  choices_file.push_back("  <-Back  ");
+  choices_file.push_back("  Save  ");
+  choices_file.push_back("  Open  ");
+  choices_file.push_back("  New  ");
+
+    
+  Menu *menu_file = new Menu(pEvd, choices_file);
+  
   switch(e.getType())
     {
     case Event::EV_CHARACTER:
@@ -29,9 +43,15 @@ int EventDispatcher::processEvent(const Event & e)
         {
         case KEY_F(10):
           if(_currentControl == _tab)
+	  {
             _currentControl = _menu;
+	    refresh();
+	  }
           else
+	  {
             _currentControl = _tab;
+	    refresh();
+	  }
           break;
 
         default:
@@ -56,6 +76,19 @@ int EventDispatcher::processEvent(const Event & e)
 
     case Event::EV_QUIT:
       ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
+      break;
+      
+    case Event::EV_FILE:
+      refresh();
+      addTarget(menu_file);
+      break;
+      
+    case Event::EV_FILE_NEW:
+      clog<<"new";
+      break;
+      
+    case Event::EV_BACK_FILE:
+      removeTarget(menu_file);
       break;
 
     default:

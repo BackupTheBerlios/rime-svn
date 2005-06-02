@@ -18,6 +18,7 @@ Tab::Tab(EventDispatcher * pEd) : ControlObject(pEd)
   int win_width = cols;
 
   win = newwin(win_height, win_width, 2, 0);
+
   pBuffer = new Buffer;
 
    if(win == NULL)

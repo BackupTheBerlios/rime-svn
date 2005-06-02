@@ -71,6 +71,7 @@ int Menu::processEvent(const Event &ev)
 		
 	    case 13: ///daca s-a apasat tasta "Enter"
           stare = item_name(current_item(pMyMenu));
+	  clog << "stare:"<<stare << endl;
           break;
         }
     }
@@ -102,9 +103,20 @@ int Menu::processEvent(const Event &ev)
     {
       ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_NEW));
     }
-  if(stare == "<-Back")///iesire din submeniul File si revenire la meniul principal
+
+  if(stare == "Open")///File->Open
     {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_BACK_FILE));
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_OPEN));
+    }
+
+  if(stare == "Save")///File->Save
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_SAVE));
+    }
+
+  if(stare == "Back")///iesire din submeniul File si revenire la meniul principal
+    {
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_BACK));
     }
 
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));

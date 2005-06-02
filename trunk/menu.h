@@ -23,7 +23,7 @@ class Menu: public ControlObject
   string stare;
 
  public: 
-  Menu(EventDispatcher* ,vector<string>);
+  Menu(EventDispatcher*, vector<string>);
   ~Menu();
   
   virtual void draw();

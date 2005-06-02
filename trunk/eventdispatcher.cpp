@@ -26,16 +26,16 @@ int EventDispatcher::processEvent(const Event & e)
 
   vector<string> choices_file;
   EventDispatcher *pEvd = new EventDispatcher;      
-  
-  
-  choices_file.push_back("  <-Back  ");
-  choices_file.push_back("  Save  ");
-  choices_file.push_back("  Open  ");
-  choices_file.push_back("  New  ");
 
-    
-  Menu *menu_file = new Menu(pEvd, choices_file);
-  
+
+  choices_file.push_back("Back");
+  choices_file.push_back("Save");
+  choices_file.push_back("Open");
+  choices_file.push_back("New");
+
+  Menu *menu_file;
+
+
   switch(e.getType())
     {
     case Event::EV_CHARACTER:
@@ -75,20 +75,41 @@ int EventDispatcher::processEvent(const Event & e)
       break;
 
     case Event::EV_QUIT:
+      clog << "EV_QUIT" << endl;
       ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
       break;
       
     case Event::EV_FILE:
+      menu_file = new Menu(pEvd, choices_file);    
+      clog << "EV_FILE" << endl;
       refresh();
       addTarget(menu_file);
       break;
       
-    case Event::EV_FILE_NEW:
-      clog<<"new";
+    case Event::EV_EDIT:
+      clog << "EV_EDIT" << endl;
       break;
       
-    case Event::EV_BACK_FILE:
+    case Event::EV_VIEW:
+      clog << "EV_VIEW" << endl;
+      break;  
+      
+       
+      
+    case Event::EV_FILE_NEW:
+      clog << "EV_FILE_NEW" << endl;
+      break;
+    case Event::EV_FILE_OPEN:
+      clog << "EV_FILE_OPEN" << endl;
+      break;
+    case Event::EV_FILE_SAVE:
+      clog << "EV_FILE_SAVE" << endl;
+      break;
+      
+    case Event::EV_FILE_BACK:
+      clog << "EV_FILE_BACK" << endl;
       removeTarget(menu_file);
+      addTarget(_menu);
       break;
 
     default:

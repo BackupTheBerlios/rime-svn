@@ -26,10 +26,10 @@ ControlPanel::ControlPanel()
   
   pEd = new EventDispatcher();
   vector<string> choices;
-  choices.push_back("  File  ");
-  choices.push_back("  Edit  ");  
-  choices.push_back("  Help  ");
-  choices.push_back("  Quit  ");
+  choices.push_back("File");
+  choices.push_back("Edit");  
+  choices.push_back("Help");
+  choices.push_back("Quit");
   
   // TODO: read layout from a file
 

@@ -81,7 +81,7 @@ void ControlPanel::start()
     {
       for(list<EventManager*>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
         {
-          if((*it)->peekEvent(ev, PE_REMOVE))
+          while((*it)->peekEvent(ev, PE_REMOVE))
             {
               pEd->processEvent(ev);
             }    
@@ -106,4 +106,9 @@ void ControlPanel::addEventManager(EventManager * pEvMgr)
 void ControlPanel::setState(states state)
 {
   this->state = state;
+}
+
+int ControlPanel::getState()
+{
+  return state;
 }

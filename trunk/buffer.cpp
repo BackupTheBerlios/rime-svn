@@ -8,20 +8,20 @@ using namespace std;
 
 #include "buffer.h"
 
-Buffer::mode Buffer::st = OVR	       ;
-unsigned int Buffer::mark_set = OFF     ;
-unsigned int Buffer::mark_start_x = 0   ;
-unsigned int Buffer::mark_end_x = 0     ;
-unsigned int Buffer::mark_start_y = 0   ;
-unsigned int Buffer::mark_end_y = 0     ;
-unsigned int Buffer::mark_ready = 0     ;
-unsigned int Buffer::command_mode = OFF ;
-
 Buffer::Buffer() : lines(1)
 {
   cursor.x = 0;
   cursor.y = 0;
   lines[0] = vector<char> (0);
+
+  st = OVR	       ;
+  mark_set = OFF     ;
+  mark_start_x = 0   ;
+  mark_end_x = 0     ;
+  mark_start_y = 0   ;
+  mark_end_y = 0     ;
+  mark_ready = 0     ;
+  command_mode = OFF ;
 }
 
 

@@ -23,6 +23,7 @@ class ControlPanel : public EventManager
 
   void start();
   void setState(states);
+  int getState();
 
   void addControl(ControlObject *);
   void addEvent(Event &);

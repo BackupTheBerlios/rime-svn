@@ -16,9 +16,6 @@ class Buffer
 
   enum mode { INS = 0 , OVR =1 };  // INS == insert mode ,  OVR == overwrite mode
   enum { ON = 0 , OFF = 1 };
-  static mode st ; // st in  {  INS , OVR } 
-  static unsigned int mark_set , mark_ready , mark_start_x , mark_end_x
-                      , mark_start_y  , mark_end_y , command_mode  ;  // mark_set in { ON , OFF  }
   
 //[eug end]  
   
@@ -27,6 +24,11 @@ class Buffer
   POINT cursor;
   
   vector<vector<char> > lines;
+
+  mode st ; // st in  {  INS , OVR } 
+  unsigned int mark_set , mark_ready, mark_start_x , mark_end_x,
+    mark_start_y, mark_end_y, 
+    command_mode;  // mark_set in { ON , OFF  }
   
  public:
   Buffer();

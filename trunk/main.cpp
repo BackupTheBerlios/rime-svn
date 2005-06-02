@@ -22,13 +22,10 @@ int main(int  argc , char** argv )
   if(slog.is_open())
     clog.rdbuf(slog.rdbuf());
 
-  //  signal(SIGWINCH, sigwinch_handler);
+  signal(SIGWINCH, sigwinch_handler);
 
   ControlPanel::cPanel.start();
 
   clog << "Main is done!" << endl;
   return 0;
 }
-
-
-

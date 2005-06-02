@@ -1,6 +1,7 @@
 #include "keymanager.h"
 #include "event.h"
 #include "globals.h"
+#include "controlpanel.h"
 
 #include <pthread.h>
 #include <curses.h>
@@ -37,7 +38,7 @@ void KeyManager::start()
 
   while(true)
     {
-      int ch  = getch();
+      int ch = getch();
 
       switch(ch)
         {
@@ -50,7 +51,7 @@ void KeyManager::start()
           ev = Event(Event::EV_CHARACTER, ch);       
           break;
         }
-      events.push(ev);        
+      events.push(ev);
     }
 }
 

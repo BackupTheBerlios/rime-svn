@@ -35,8 +35,8 @@ int Buffer::add(int ch)
       if(cursor.y > 0)
         cursor.y--;
 
-      if(cursor.x > lines[cursor.y].size() - 1)
-        cursor.x = lines[cursor.y].size() - 1;
+      if(cursor.x > lines[cursor.y].size())
+        cursor.x = lines[cursor.y].size();
       break;
     case KEY_DOWN:
       if(cursor.y + 1 < lines.size())

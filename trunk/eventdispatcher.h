@@ -8,13 +8,22 @@ using namespace std;
 #include "eventhandler.h"
 
 class ControlObject;
+class Menu;
+class Tab;
+class TabsLine;
+class StatusLine;
 
 class  EventDispatcher : public EventHandlerObject
 {
  private:
   list<ControlObject *> objects;
   ControlObject * _currentControl;
-  ControlObject * _menu, * _tab, * _tabsLine, * _statusLine;
+
+  Menu * _menu;
+  Tab * _tab;
+  TabsLine * _tabsLine;
+  StatusLine * _statusLine;
+
   ControlObject * currentMenu;
 
   void setCurrentControl(ControlObject *);

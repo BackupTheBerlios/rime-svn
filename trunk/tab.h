@@ -19,6 +19,8 @@ class Tab: public ControlObject
 
   virtual void draw();
   virtual int processEvent(const Event &);
+
+  const Buffer * getBuffer() { return pBuffer; }
 };
 
 #endif

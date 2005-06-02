@@ -29,7 +29,7 @@ Tab::Tab(EventDispatcher * pEd) : ControlObject(pEd)
 #endif
      }
 
-   pEd->setTab(this);
+   pEd->setTab((ControlObject *) this);
 }
 
 Tab::~Tab()

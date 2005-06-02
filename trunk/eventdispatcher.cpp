@@ -11,6 +11,9 @@ using namespace std;
 #include "eventdispatcher.h"
 #include "controlpanel.h"
 #include "menu.h"
+#include "tab.h"
+#include "statusline.h"
+#include "tabsline.h"
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
 
@@ -32,14 +35,14 @@ int EventDispatcher::processEvent(const Event & e)
       switch(e.getValue())
         {
         case KEY_F(10):
-          if(_currentControl == _tab)
+          if(_currentControl == (ControlObject *) _tab)
             {
-              _currentControl = _menu;
+              _currentControl = (ControlObject *) _menu;
               refresh();
             }
           else
             {
-              _currentControl = _tab;
+              _currentControl = (ControlObject *) _tab;
               refresh();
             }
           break;
@@ -58,6 +61,7 @@ int EventDispatcher::processEvent(const Event & e)
         }
       break;
     case Event::EV_CLICK:
+      clog << "Click detected!" << endl;
       switch(HIWORD(e.getValue())) // y
         {
         case 0:
@@ -131,6 +135,7 @@ int EventDispatcher::addTarget(ControlObject * target)
     {
       objects.push_back(target);
       setCurrentControl(target);
+
       return 0;
     }
 
@@ -153,23 +158,24 @@ void EventDispatcher::setCurrentControl(ControlObject * target)
 
 void EventDispatcher::setMenu(ControlObject * menu)
 {
-  _menu = menu;
+  _menu = (Menu *) menu;
 }
 
 
 void EventDispatcher::setTab(ControlObject * tab)
 {
-  _tab = tab;
+  _tab = (Tab *) tab;
+  _tabsLine->addTab(_tab);
 }
 
 
 void EventDispatcher::setTabsLine(ControlObject * tabsline)
 {
-  _tabsLine = tabsline;
+  _tabsLine = (TabsLine *) tabsline;
 }
 
 
 void EventDispatcher::setStatusLine(ControlObject * statusline)
 {
-  _statusLine = statusline;
+  _statusLine = (StatusLine *) statusline;
 }

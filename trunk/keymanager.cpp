@@ -43,11 +43,11 @@ void KeyManager::start()
       switch(ch)
         {
         case KEY_MOUSE:
-          //getmouse(&mEvent);
-          //ch = MAKEINT(mEvent.x, mEvent.y);
-          //ev = Event(Event::EV_CLICK, ch);
-	  printw("IOIOIO\n");
-	  refresh();
+          getmouse(&mEvent);
+          ch = MAKEINT(mEvent.x, mEvent.y);
+          ev = Event(Event::EV_CLICK, ch);
+          clog << "Mouse event detected." << endl;
+          refresh();
           break;
         default:
           ev = Event(Event::EV_CHARACTER, ch);       

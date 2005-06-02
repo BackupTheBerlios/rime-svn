@@ -4,7 +4,7 @@ TabsLine::TabsLine(EventDispatcher * pEd) : ControlObject(pEd)
 {
   win = newwin(1, cols, 1, 0);
 
-  pEd->setTabsLine(this);
+  pEd->setTabsLine((ControlObject *) this);
 }
 
 TabsLine::~TabsLine()
@@ -21,13 +21,23 @@ int TabsLine::processEvent(const Event &)
 
 void TabsLine::draw()
 {
-  /*  for(list<Tab *>::iterator it = tabs.begin(); it != tabs.end(); it++)
-    {
-      
-    }*/
-
+  int i = 0;
   werase(win);
-  wprintw(win, "Hello world!");
+  
+  wmove(win, 0, 1);
+
+  wvline(win, ACS_VLINE, 1);
+
+  for(list<Tab *>::iterator it = _tabs.begin(); it != _tabs.end(); it++)
+    {
+      wprintw(win, " #%s# ", (*it)->getBuffer()->getFileName().c_str());
+      wvline(win, ACS_VLINE, 1);
+    }
 
   wnoutrefresh(win);
+}
+
+void TabsLine::addTab(Tab * t)
+{
+  _tabs.push_back(t);
 }

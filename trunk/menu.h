@@ -11,7 +11,6 @@ using namespace std;
 
 #include "control.h"
 
-
 class Menu: public ControlObject
 {
  private:

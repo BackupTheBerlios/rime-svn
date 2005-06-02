@@ -24,6 +24,8 @@ int main(int  argc , char** argv )
 
   signal(SIGWINCH, sigwinch_handler);
 
+  ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
+
   ControlPanel::cPanel.start();
 
   clog << "Main is done!" << endl;

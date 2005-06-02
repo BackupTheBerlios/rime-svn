@@ -1,4 +1,4 @@
-OBJS = control.o controlpanel.o eventdispatcher.o eventmanager.o keymanager.o main.o tab.o event.o menu.o buffer.o xml_parser.o
+OBJS = control.o controlpanel.o eventdispatcher.o eventmanager.o keymanager.o main.o tab.o event.o menu.o buffer.o xml_parser.o tabsline.o statusline.o
 CC = gcc
 LDFLAGS = -lpthread -lncurses -lstdc++ -lmenu -lexpat
 CFLAGS = -W -Wall -g -pedantic-errors

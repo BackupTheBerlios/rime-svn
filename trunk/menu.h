@@ -15,12 +15,12 @@ using namespace std;
 class Menu: public ControlObject
 {
  private:
-  vector<string> choices;
-
   MENU *pMyMenu;
   ITEM **pMyItems;
 
   string stare;
+
+  unsigned int numItems;
 
  public: 
   Menu(EventDispatcher*, vector<string>);
@@ -28,6 +28,9 @@ class Menu: public ControlObject
   
   virtual void draw();
   virtual int processEvent(const Event &);
+
+  void buildMenu(const vector<string> &);
+  void destroyMenu();
 };
 
 #endif // _MENU_H

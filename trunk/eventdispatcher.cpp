@@ -161,3 +161,15 @@ void EventDispatcher::setTab(ControlObject * tab)
 {
   _tab = tab;
 }
+
+
+void EventDispatcher::setTabsLine(ControlObject * tabsline)
+{
+  _tabsLine = tabsline;
+}
+
+
+void EventDispatcher::setStatusLine(ControlObject * statusline)
+{
+  _statusLine = statusline;
+}

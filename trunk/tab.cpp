@@ -13,7 +13,6 @@ using namespace std;
 
 Tab::Tab(EventDispatcher * pEd) : ControlObject(pEd)
 {
-  getmaxyx(stdscr, lines, cols);
   int win_height = lines - 3;
   int win_width = cols;
 

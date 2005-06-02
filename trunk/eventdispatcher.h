@@ -28,6 +28,8 @@ class  EventDispatcher : public EventHandlerObject
 
   void setMenu(ControlObject *);
   void setTab(ControlObject *);
+  void setTabsLine(ControlObject *);
+  void setStatusLine(ControlObject *);
 };
 
 #endif // __EVENTDISPATCHER_H

@@ -3,6 +3,8 @@
 #include "keymanager.h"
 #include "event.h"
 #include "menu.h"
+#include "statusline.h"
+#include "tabsline.h"
 
 #include <curses.h>
 #include <menu.h>
@@ -39,6 +41,8 @@ ControlPanel::ControlPanel()
   choices.push_back("Quit");
 
   addControl(new Menu(pEd,choices));
+  addControl(new StatusLine(pEd));
+  addControl(new TabsLine(pEd));
   addControl(new Tab(pEd));
   
 

@@ -14,48 +14,31 @@ Menu::Menu(EventDispatcher * pEd, vector<string> choices) : ControlObject(pEd)
   //stare = "begin";
   pEd->setMenu(this);
  
-  pMyItems = new ITEM*[choices.size() + 1];
-    
-  for(unsigned int i = 0; i < choices.size(); i++)
-	pMyItems[i] = new_item(choices[i].c_str(), "");
-	
-  pMyItems[choices.size()] = NULL;
-
-  pMyMenu = new_menu((ITEM**)pMyItems);
-
-  refresh();
-  set_menu_format(pMyMenu,1,7);
   win = newwin(0, COLS, 0, 0);
   keypad(win,TRUE);
-  set_menu_win(pMyMenu,win);
-  set_menu_mark(pMyMenu,"*");
-    
-  post_menu(pMyMenu);
-  
+
+  buildMenu(choices);
 }
 
 Menu::~Menu()
 {
-  unpost_menu(pMyMenu);
-  for(unsigned int i = 0; i < choices.size(); i++)    
-  	free_item(pMyItems[i]);
-    
-  free_menu(pMyMenu);
+  destroyMenu();
+
   refresh();
 }
+
+
 void Menu::draw()
 {
   clog << "Menu::draw()" << endl;
   wrefresh(win);
 }
 
+
 int Menu::processEvent(const Event &ev)
 {
   clog << "Got an event" << endl;
   
-  Menu *menu_file;
-//  EventDispatcher *pEd;
-
   if(ev.getType() == Event::EV_CHARACTER)
     {
       clog << "The event is " << ev.getValue() << " != " << KEY_RIGHT << " " << KEY_LEFT << " " << KEY_ENTER << endl;
@@ -80,28 +63,22 @@ int Menu::processEvent(const Event &ev)
             }
           if( (stare == "File")/* || (item_index(current_item(pMyMenu))==0)*/ )///accesare File din meniul principal
             {
-//              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE));
-		
-		
-		EventDispatcher *pEd = new EventDispatcher();
-		vector<string> choices_file;
+              vector<string> choices;
 
-		
-		
-		
-		choices_file.push_back("Back");
-		choices_file.push_back("Save");
-		choices_file.push_back("Open");
-		choices_file.push_back("New ");								
+              choices.clear();
+				
+              choices.push_back("New ");								
+              choices.push_back("Open");
+              choices.push_back("Save");
+              choices.push_back("Back");
 								
-		
-		unpost_menu(pMyMenu);
-		menu_file = new Menu(pEd,choices_file);
-		post_menu(pMyMenu);
-		wrefresh(win);
+              destroyMenu();
 
-		ControlPanel::cPanel.addControl(menu_file);
-                return 0;
+              buildMenu(choices);
+              
+              wrefresh(win);
+
+              return 0;
             }
           if( (stare == "Edit")/* || (item_index(current_item(pMyMenu))==1)*/ )
             {
@@ -136,27 +113,16 @@ int Menu::processEvent(const Event &ev)
 
           if(stare == "Back")///iesire din submeniul File si revenire la meniul principal
             {
-              //ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_BACK));
-	      EventDispatcher *pEd = new EventDispatcher();
-	      vector<string> choices;
+              vector<string> choices;
 
-
-
-	      choices.push_back("File");
-	      choices.push_back("Edit");		
-	      choices.push_back("Help");
-	      choices.push_back("Quit");
+              choices.push_back("File");
+              choices.push_back("Edit");		
+              choices.push_back("Help");
+              choices.push_back("Quit");
 	      
-	      unpost_menu(pMyMenu);
-	      
-	      Menu *menu = new Menu(pEd,choices);
-	      post_menu(pMyMenu);
+              destroyMenu();
 
-	      wrefresh(win);
-	      ControlPanel::cPanel.addControl(menu);
-	      pEd->removeTarget(menu_file);
-	      pEd->addTarget(menu);
-              //return 0;	      
+              buildMenu(choices);
             }
           break;
         }
@@ -165,4 +131,40 @@ int Menu::processEvent(const Event &ev)
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
   
   return 0;
+}
+
+
+void Menu::buildMenu(const vector<string> & choices)
+{
+  numItems = choices.size();
+
+  pMyItems = new ITEM*[numItems + 1];
+    
+  for(unsigned int i = 0; i < numItems; i++)
+	pMyItems[i] = new_item(choices[i].c_str(), "");
+  
+  pMyItems[numItems] = NULL;
+
+  pMyMenu = new_menu((ITEM**)pMyItems);
+
+  set_menu_format(pMyMenu,1,7);
+  set_menu_win(pMyMenu,win);
+  set_menu_mark(pMyMenu,"*");
+    
+  post_menu(pMyMenu);
+
+  wrefresh(win);
+}
+
+
+void Menu::destroyMenu()
+{
+  unpost_menu(pMyMenu);
+
+  for(unsigned int i = 0; i < numItems; i++)    
+  	free_item(pMyItems[i]);
+
+  delete[] pMyItems;
+
+  free_menu(pMyMenu);
 }

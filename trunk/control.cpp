@@ -5,6 +5,8 @@ ControlObject::ControlObject(EventDispatcher * e)
   pDisp = e;
 
   pDisp->addTarget(this);
+
+  getmaxyx(stdscr, lines, cols);
 }
 
 ControlObject::~ControlObject()

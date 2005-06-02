@@ -44,10 +44,11 @@ void KeyManager::start()
         {
         case KEY_MOUSE:
           getmouse(&mEvent);
-          ch = MAKEINT(mEvent.x, mEvent.y);
-          ev = Event(Event::EV_CLICK, ch);
-          clog << "Mouse event detected." << endl;
-          refresh();
+	  if ( mEvent.bstate & BUTTON1_CLICKED )
+	  {
+              ch = MAKEINT(mEvent.x, mEvent.y);
+	      ev = Event(Event::EV_CLICK, ch);
+	}
           break;
         default:
           ev = Event(Event::EV_CHARACTER, ch);       

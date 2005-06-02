@@ -127,6 +127,12 @@ int Menu::processEvent(const Event &ev)
           break;
         }
     }
+    else if(ev.getType() == Event::EV_CLICK)
+    {
+	clog << "meniul si-a dat seama ca e accesat de un mouse"<< endl;
+	// cod pentru prelucrarea evenimentului de mouse
+	int k = HIWORD(ev.getValue());
+    }
 
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
   

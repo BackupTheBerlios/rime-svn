@@ -30,10 +30,26 @@ void * KeyManager::start_FORKED(void * pvKeyManager)
 
 void KeyManager::start()
 {
+  MEVENT mEvent;
+  Event ev;
+
+  mousemask(BUTTON1_CLICKED, NULL);
+
   while(true)
     {
       int ch  = getch() ;
-      Event ev( Event::EV_CHARACTER, ch);       
+
+      switch(ch)
+        {
+        case KEY_MOUSE:
+          getmouse(&mEvent);
+          ch = (mEvent.x & 0xFFFF) << 16 + mEvent.y & 0xFFFF;
+          ev = Event(Event::EV_CLICK, ch);
+          break;
+        default:
+          ev = Event(Event::EV_CHARACTER, ch);       
+          break;
+        }
       events.push(ev);        
     }
 }

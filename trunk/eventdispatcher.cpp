@@ -24,17 +24,7 @@ int EventDispatcher::processEvent(const Event & e)
 {
   // TODO:
 
-  vector<string> choices_file;
-  EventDispatcher *pEvd = new EventDispatcher;      
-
-
-  choices_file.push_back("Back");
-  choices_file.push_back("Save");
-  choices_file.push_back("Open");
-  choices_file.push_back("New");
-
-  Menu *menu_file;
-
+  //  Menu *menu_file;
 
   switch(e.getType())
     {
@@ -43,15 +33,15 @@ int EventDispatcher::processEvent(const Event & e)
         {
         case KEY_F(10):
           if(_currentControl == _tab)
-	  {
-            _currentControl = _menu;
-	    refresh();
-	  }
+            {
+              _currentControl = _menu;
+              refresh();
+            }
           else
-	  {
-            _currentControl = _tab;
-	    refresh();
-	  }
+            {
+              _currentControl = _tab;
+              refresh();
+            }
           break;
 
         default:
@@ -80,10 +70,11 @@ int EventDispatcher::processEvent(const Event & e)
       break;
       
     case Event::EV_FILE:
-      menu_file = new Menu(pEvd, choices_file);    
+      // menu_file = new Menu(this, qw123);    
       clog << "EV_FILE" << endl;
-      refresh();
-      addTarget(menu_file);
+ 
+      doupdate();
+      // addTarget(menu_file);
       break;
       
     case Event::EV_EDIT:
@@ -108,8 +99,8 @@ int EventDispatcher::processEvent(const Event & e)
       
     case Event::EV_FILE_BACK:
       clog << "EV_FILE_BACK" << endl;
-      removeTarget(menu_file);
-      addTarget(_menu);
+//       removeTarget(menu_file);
+//       addTarget(_menu);
       break;
 
     default:

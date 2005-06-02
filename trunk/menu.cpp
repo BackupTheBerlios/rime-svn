@@ -12,20 +12,16 @@
 Menu::Menu(EventDispatcher * pEd, vector<string> choices) : ControlObject(pEd)
 {
   pEd->setMenu(this);
-/*
-  choices.push_back("File");
-  choices.push_back("Edit");
-  choices.push_back("View");
-  choices.push_back("Help");  
- */
  
-  pMyItems = (ITEM**)calloc(choices.size() + 1, sizeof(ITEM*));
+  pMyItems = new ITEM*[choices.size() + 1];
     
   for(unsigned int i = 0; i < choices.size(); i++)
 	pMyItems[i] = new_item(choices[i].c_str(), "");
 	
-  pMyItems[choices.size()] = (ITEM*)NULL;
+  pMyItems[choices.size()] = NULL;
+
   pMyMenu = new_menu((ITEM**)pMyItems);
+
   refresh();
   set_menu_format(pMyMenu,1,4);
   win = newwin(0, COLS, 0, 0);
@@ -71,52 +67,52 @@ int Menu::processEvent(const Event &ev)
 		
 	    case 13: ///daca s-a apasat tasta "Enter"
           stare = item_name(current_item(pMyMenu));
-	  clog << "stare:"<<stare << endl;
+          clog << "stare:"<<stare << endl;
+
+          if(stare == "Quit")
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT));
+              return 0;
+            }
+          if(stare == "File")///accesare File din meniul principal
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE));
+              return 0;
+            }
+          if(stare == "Edit")
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
+              return 0;
+            }    
+          if(stare == "Help")
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_HELP));
+              return 0;
+            }
+    
+          ///////////////////////////////////////////////////////////////////////////////////////    
+
+          if(stare == "New")///File->New
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_NEW));
+            }
+
+          if(stare == "Open")///File->Open
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_OPEN));
+            }
+
+          if(stare == "Save")///File->Save
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_SAVE));
+            }
+
+          if(stare == "Back")///iesire din submeniul File si revenire la meniul principal
+            {
+              ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_BACK));
+            }
           break;
         }
-    }
-
-  if(stare == "Quit")
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_QUIT));
-      return 0;
-    }
-  if(stare == "File")///accesare File din meniul principal
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE));
-      return 0;
-    }
-  if(stare == "Edit")
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
-      return 0;
-    }    
-  if(stare == "Help")
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_HELP));
-      return 0;
-    }
-    
-///////////////////////////////////////////////////////////////////////////////////////    
-
-  if(stare == "New")///File->New
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_NEW));
-    }
-
-  if(stare == "Open")///File->Open
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_OPEN));
-    }
-
-  if(stare == "Save")///File->Save
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_SAVE));
-    }
-
-  if(stare == "Back")///iesire din submeniul File si revenire la meniul principal
-    {
-      ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_BACK));
     }
 
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));

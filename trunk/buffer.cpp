@@ -8,14 +8,14 @@ using namespace std;
 
 #include "buffer.h"
 
-int Buffer::st = OVR	       ;
-int Buffer::mark_set = OFF     ;
-int Buffer::mark_start_x = 0   ;
-int Buffer::mark_end_x = 0     ;
-int Buffer::mark_start_y = 0   ;
-int Buffer::mark_end_y = 0     ;
-int Buffer::mark_ready = 0     ;
-int Buffer::command_mode = OFF ;
+Buffer::mode Buffer::st = OVR	       ;
+unsigned int Buffer::mark_set = OFF     ;
+unsigned int Buffer::mark_start_x = 0   ;
+unsigned int Buffer::mark_end_x = 0     ;
+unsigned int Buffer::mark_start_y = 0   ;
+unsigned int Buffer::mark_end_y = 0     ;
+unsigned int Buffer::mark_ready = 0     ;
+unsigned int Buffer::command_mode = OFF ;
 
 Buffer::Buffer() : lines(1)
 {
@@ -187,14 +187,14 @@ void Buffer::key_c( char ch, int del_mode ) // del_mode in {ON , OFF}
   ///////////////////// selecttie randuri diferite caz y1 < y2  /////////////////////
   if(mark_start_y < mark_end_y )
     {
-      for( i = mark_start_x ; i < lines[ mark_start_y  ].size()  ; i++  )
+      for( i = mark_start_x ; i < lines[mark_start_y].size()  ; i++  )
 	    {
           aux_add_ch(  lines[mark_start_y][i]  );
 	    }
 
       key_13() ;
 
-      for( j = mark_start_y+1 ; j <  mark_end_y  ; j++  )
+      for(j = mark_start_y + 1; j < mark_end_y; j++)
 	    {
           for( i = 0 ; i < lines[j].size() ; i++   )
     		{
@@ -287,9 +287,7 @@ void Buffer::key_d( char ch )
     {
       if( isprint(ch) )
         aux_add_ch( ch ) ;
-
     }
-
 }
 
 

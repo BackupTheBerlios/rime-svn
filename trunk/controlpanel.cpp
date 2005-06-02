@@ -25,17 +25,18 @@ ControlPanel::ControlPanel()
   cbreak();
   
   pEd = new EventDispatcher();
-  vector<string> choices;
-  choices.push_back("File");
-  choices.push_back("Edit");  
-  choices.push_back("Help");
-  choices.push_back("Quit");
   
   // TODO: read layout from a file
 
   
 
   // TODO: initialize controls
+
+  vector<string> choices;
+  choices.push_back("File");
+  choices.push_back("Edit");  
+  choices.push_back("Help");
+  choices.push_back("Quit");
 
   addControl(new Menu(pEd,choices));
   addControl(new Tab(pEd));

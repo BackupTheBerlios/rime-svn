@@ -81,6 +81,7 @@ void ControlPanel::start()
 {
   Event ev;
 
+    cout << "state = " << state << endl;
   while(state != CP_DONE)
     {
       for(list<EventManager*>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)

@@ -91,7 +91,7 @@ int Buffer::add(int ch)
       key_c( ch , ON ) ; // del_mode == ON ;
       break;
 
-    case '\b':
+    case KEY_BACKSPACE:
       if(cursor.x > 0)
         {
           itt = lines[cursor.y].begin();

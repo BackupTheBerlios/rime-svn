@@ -91,7 +91,7 @@ int Buffer::add(int ch)
       key_c( ch , ON ) ; // del_mode == ON ;
       break;
 
-    case KEY_BACKSPACE:
+    case '\b':
       if(cursor.x > 0)
         {
           itt = lines[cursor.y].begin();
@@ -110,10 +110,10 @@ int Buffer::add(int ch)
       break;
 
     default:
-      if(isprint(ch))
-        {
+      if( isprint(ch) )
+      {
           aux_add_ch( ch ) ;
-        }
+      }
       break;
     }
   return 0;
@@ -123,11 +123,15 @@ int Buffer::add(int ch)
 void Buffer::key_del()
 {
   vector<char>::iterator itt;
+  
 
   itt = lines[cursor.y].begin();
   advance(itt, cursor.x);
   if(  itt < lines[cursor.y].end()  )
     lines[cursor.y].erase(itt,itt+1);
+    
+    
+  
 }
 
 
@@ -281,7 +285,10 @@ void Buffer::key_d( char ch )
 {
   if( command_mode == ON  )
     {
-      lines.erase( lines.begin()+ cursor.y  , lines.begin()+ cursor.y+1  );
+      if( ! lines.empty() )
+      {
+      		lines.erase( lines.begin()+ cursor.y  , lines.begin()+ cursor.y+1  );
+      }
     }
   else
     {

@@ -15,13 +15,13 @@ Buffer::Buffer() : lines(1)
   lines[0] = vector<char> (0);
 
   st = OVR	       ;
-  mark_set = OFF     ;
-  mark_start_x = 0   ;
-  mark_end_x = 0     ;
-  mark_start_y = 0   ;
-  mark_end_y = 0     ;
-  mark_ready = 0     ;
-  command_mode = OFF ;
+  mark_set = OFF       ;
+  mark_start_x = 0     ;
+  mark_end_x = 0       ;
+  mark_start_y = 0     ;
+  mark_end_y = 0       ;
+  mark_ready = 0       ;
+  command_mode = OFF   ;
 }
 
 
@@ -49,7 +49,7 @@ int Buffer::add(int ch)
         cursor.x--;
       break;
     case KEY_RIGHT:
-      if(cursor.x + 1 < lines[cursor.y].size())
+      if(cursor.x < lines[cursor.y].size())
         cursor.x++;
       break;
     case KEY_HOME:
@@ -58,7 +58,8 @@ int Buffer::add(int ch)
     case KEY_END:
       cursor.x = lines[cursor.y].size();
       break;
-
+      
+        
     case KEY_DC:
 	  key_del() ;
       break;
@@ -91,7 +92,12 @@ int Buffer::add(int ch)
       key_c( ch , ON ) ; // del_mode == ON ;
       break;
 
+<<<<<<< .mine
+    case KEY_BACKSPACE:  
+    case '\b':
+=======
     case KEY_BACKSPACE:
+>>>>>>> .r56
       if(cursor.x > 0)
         {
           itt = lines[cursor.y].begin();
@@ -123,14 +129,42 @@ int Buffer::add(int ch)
 void Buffer::key_del()
 {
   vector<char>::iterator itt;
-  
+  int i = 0 ;
 
-  itt = lines[cursor.y].begin();
-  advance(itt, cursor.x);
-  if(  itt < lines[cursor.y].end()  )
-    lines[cursor.y].erase(itt,itt+1);
-    
-    
+if( ! lines.empty() )
+{     
+
+ if( ! lines[ cursor.y ].empty( )  )
+ {
+ 	 itt = lines[cursor.y].begin();
+ 	 advance(itt, cursor.x);
+    	 if(  itt < lines[cursor.y].end()  )
+    		lines[cursor.y].erase(itt,itt+1);
+ }   
+ 
+ 
+ if( lines.size() > 1 )
+ {
+ 
+ 	if( cursor.x  == ( lines[cursor.y].size() )  )
+ 	{
+	
+	    if(  ( lines.begin() + cursor.y +1 )  < lines.end()  )
+	   {
+   		for( i = 0 ; i < lines[cursor.y+1].size() ; i++  )
+   		{
+     			lines[cursor.y].push_back( lines[cursor.y+1][i]  );
+   		}       
+		
+	   
+     		lines.erase( lines.begin() + cursor.y+1 , lines.begin() + cursor.y +2 );  
+	  }	
+				
+ 	}   
+   }	
+   
+  }
+  
   
 }
 
@@ -336,11 +370,11 @@ void Buffer::key_m(char ch)
   else
     {
       if( mark_set == ON  )
-        {
+      {
           mark_set = OFF;
           mark_end_x = cursor.x ;
           mark_end_y = cursor.y ;
-        }
+      }
     }
 }
 

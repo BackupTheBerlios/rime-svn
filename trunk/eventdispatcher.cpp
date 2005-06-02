@@ -24,7 +24,7 @@ int EventDispatcher::processEvent(const Event & e)
 {
   // TODO:
 
-  //  Menu *menu_file;
+  //Menu *menu_file;
 
   switch(e.getType())
     {
@@ -83,19 +83,20 @@ int EventDispatcher::processEvent(const Event & e)
       break;
       
     case Event::EV_FILE:
-      // menu_file = new Menu(this, qw123);    
+      
+      //menu_file = new Menu(this, qw123);    
       clog << "EV_FILE" << endl;
  
       doupdate();
-      // addTarget(menu_file);
+      //addTarget(menu_file);
       break;
       
     case Event::EV_EDIT:
       clog << "EV_EDIT" << endl;
       break;
       
-    case Event::EV_VIEW:
-      clog << "EV_VIEW" << endl;
+    case Event::EV_HELP:
+      clog << "EV_HELP" << endl;
       break;  
       
        
@@ -112,8 +113,8 @@ int EventDispatcher::processEvent(const Event & e)
       
     case Event::EV_FILE_BACK:
       clog << "EV_FILE_BACK" << endl;
-//       removeTarget(menu_file);
-//       addTarget(_menu);
+      //removeTarget(menu_file);
+      //addTarget(_menu);
       break;
 
     default:

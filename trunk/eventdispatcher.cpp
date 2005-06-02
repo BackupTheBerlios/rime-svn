@@ -86,14 +86,6 @@ int EventDispatcher::processEvent(const Event & e)
       ControlPanel::cPanel.setState(ControlPanel::CP_DONE);
       break;
       
-    case Event::EV_FILE:
-      
-      //menu_file = new Menu(this, qw123);    
-      clog << "EV_FILE" << endl;
- 
-      doupdate();
-      //addTarget(menu_file);
-      break;
       
     case Event::EV_EDIT:
       clog << "EV_EDIT" << endl;
@@ -101,6 +93,25 @@ int EventDispatcher::processEvent(const Event & e)
       
     case Event::EV_HELP:
       clog << "EV_HELP" << endl;
+      int x,y;
+      WINDOW *help_win;
+      char text1[300], text2[300], authors1[200], authors2[200];
+      strcpy(text1,"RimE text editor");
+      strcpy(text2,"Version 1.0");
+      strcpy(authors1,"Ciumeica Mihai, Ciur Eugen");
+      strcpy(authors2,"Corlateanu Radu, Radu Ionut");
+      help_win = newwin(LINES/2,COLS/2,LINES/4,COLS/4);
+      getyx(help_win,y,x);
+      box(help_win,0,0);
+      mvwprintw(help_win, y + 1, (x+COLS/2)/2 - strlen("About:")/2,"About:");
+      mvwprintw(help_win,(y+LINES/2)/2-2,(x+COLS/2)/2-(strlen(text1)/2),"%s",text1);
+      mvwprintw(help_win,(y+LINES/2)/2,(x+COLS/2)/2-(strlen(text2)/2),"%s",text2);
+      mvwprintw(help_win,y+LINES/2-5,(x+COLS/2)/2 - (strlen("Authors:")/2), "Authors:");
+      mvwprintw(help_win,y+LINES/2-4,(x+COLS/2)/2 - (strlen(authors1)/2), "%s",authors1);
+      mvwprintw(help_win,y+LINES/2-3,(x+COLS/2)/2 - (strlen(authors2)/2), "%s",authors2);
+      mvwprintw(help_win,y+LINES/2-2,(x+COLS/2)/2 - (strlen("Press SPACEBAR to continue")/2), "Press SPACEBAR to continue");	
+      keypad(help_win,TRUE);
+      wrefresh(help_win); 
       break;  
       
        
@@ -115,11 +126,6 @@ int EventDispatcher::processEvent(const Event & e)
       clog << "EV_FILE_SAVE" << endl;
       break;
       
-    case Event::EV_FILE_BACK:
-      clog << "EV_FILE_BACK" << endl;
-      //removeTarget(menu_file);
-      //addTarget(_menu);
-      break;
 
     default:
       break;

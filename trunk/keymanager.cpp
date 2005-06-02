@@ -37,13 +37,13 @@ void KeyManager::start()
 
   while(true)
     {
-      int ch  = getch() ;
+      int ch  = getch();
 
       switch(ch)
         {
         case KEY_MOUSE:
           getmouse(&mEvent);
-          ch = (mEvent.x & 0xFFFF) << 16 + mEvent.y & 0xFFFF;
+          ch = MAKEINT(mEvent.x, mEvent.y);
           ev = Event(Event::EV_CLICK, ch);
           break;
         default:

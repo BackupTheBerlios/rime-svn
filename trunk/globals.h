@@ -17,6 +17,8 @@ struct RECT
   unsigned int x2, y2;
 };
 
-
+#define MAKEINT(x, y) (((y) & 0xFFFF) << 16 + (x) & 0xFFFF)
+#define HIWORD(x) (((x) >> 16) & 0xFFFF)
+#define LOWORD(x) ((x) & 0xFFFF)
 
 #endif // __GLOBALS_H

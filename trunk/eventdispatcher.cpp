@@ -57,6 +57,19 @@ int EventDispatcher::processEvent(const Event & e)
           break;
         }
       break;
+    case Event::EV_CLICK:
+      switch(HIWORD(e.getValue())) // y
+        {
+        case 0:
+          _menu->processEvent(e);
+          break;
+        case 1:
+          break;
+        default:
+          _tab->processEvent(e);
+          break;
+        }
+      break;
     case Event::EV_REDRAW:
       for(list<ControlObject *>::iterator it = objects.begin(); it != objects.end(); it++)
         (*it)->draw();

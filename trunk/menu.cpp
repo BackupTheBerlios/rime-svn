@@ -85,12 +85,12 @@ int Menu::processEvent(const Event &ev)
               return 0;
             }
         
-	  if( (stare == "Edit")/* || (item_index(current_item(pMyMenu))==1)*/ )
+          if( (stare == "Edit")/* || (item_index(current_item(pMyMenu))==1)*/ )
             {
               //ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
-	      Buffer *buf = new Buffer();
-	      buf->add(27);///intrat in modul comanda din clasa Buffer
-	      vector<string> choices;
+              Buffer *buf = new Buffer();
+              buf->add(27);///intrat in modul comanda din clasa Buffer
+              vector<string> choices;
 
               choices.clear();
 				
@@ -104,13 +104,13 @@ int Menu::processEvent(const Event &ev)
               buildMenu(choices);
               
               wrefresh(win);
-	      refresh();
+              refresh();
 
               return 0;
-             // return 0;
+              // return 0;
             }    
         
-	  if( (stare == "Help")/* || (item_index(current_item(pMyMenu))==2)*/ )
+          if( (stare == "Help")/* || (item_index(current_item(pMyMenu))==2)*/ )
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_HELP));
               return 0;
@@ -129,7 +129,19 @@ int Menu::processEvent(const Event &ev)
           else if(stare == "Save")///File->Save
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_SAVE));
-              return 0;	      
+            }
+          else if(stare == "Mark")
+            {
+              Buffer *buf = new Buffer();
+              buf->add('m');///trimit caracterul 'm' la buffer in modul comanda --> Mark
+            }
+          else if(stare == "Copy")
+            {
+              Buffer *buf = new Buffer();
+              buf->add(99);///trimit caracterul 'c' la buffer in modul comanda --> Copy
+            } 
+          else if(stare == "Past")
+            {
             }
 
           vector<string> choices;
@@ -143,50 +155,23 @@ int Menu::processEvent(const Event &ev)
           
           buildMenu(choices);
 
-	    
-	  if(stare == "Mark")
-	    {
-		Buffer *buf = new Buffer();
-		buf->add('m');///trimit caracterul 'm' la buffer in modul comanda --> Mark
-	    }
-	  if(stare == "Copy")
-	    {
-		Buffer *buf = new Buffer();
-		buf->add(99);///trimit caracterul 'c' la buffer in modul comanda --> Copy
-	    }    
-	  if(stare == "Past")
-	    {
-	    }
-	  if(stare == "<---")
-	    {
-		Buffer *buf = new Buffer();
-		buf->add(27); ///iesire din modul comanda
-		vector<string> choices;
+          stare = "File";
 
-                choices.push_back("File");
-                choices.push_back("Edit");		
-                choices.push_back("Help");
-                choices.push_back("Quit");
-	      
-                destroyMenu();
-
-                buildMenu(choices);
-		refresh();
-	    }
           break;
         }
       break;
     case  Event::EV_CLICK:
       x = LOWORD(ev.getValue());
+      clog << "X = " << x << endl;
       x = x / 6;
       if ( x > 4) 
-	x = 1;
-	menu_driver(pMyMenu , REQ_FIRST_ITEM);
+        x = 1;
+      menu_driver(pMyMenu , REQ_FIRST_ITEM);
 	
-	for ( int k = 0 ; k < x; k++)
+      for ( int k = 0 ; k < x; k++)
 	    menu_driver(pMyMenu , REQ_RIGHT_ITEM);
 
-	ControlPanel::cPanel.pushEvent(Event(Event::EV_CHARACTER, 13));
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_CHARACTER, 13));
       break;
     default:
       break;
@@ -217,7 +202,7 @@ void Menu::buildMenu(const vector<string> & choices)
     
   post_menu(pMyMenu);
 
-  wrefresh(win);
+  refresh();
 }
 
 

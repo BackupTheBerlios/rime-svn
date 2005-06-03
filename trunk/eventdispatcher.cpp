@@ -65,22 +65,27 @@ int EventDispatcher::processEvent(const Event & e)
       switch(HIWORD(e.getValue())) // y
         {
         case 0:
-	  _currentControl = _menu;
+          _currentControl = _menu;
           _menu->processEvent(e);
           break;
         case 1:
+          _currentControl = _tabsLine;
+          _tabsLine->processEvent(e);
+          _currentControl = _tab;
           break;
         default:
-	  _currentControl = _tab;
+          _currentControl = _tab;
           _tab->processEvent(e);
           break;
         }
       break;
     case Event::EV_REDRAW:
-      for(list<ControlObject *>::iterator it = objects.begin(); it != objects.end(); it++)
-        (*it)->draw();
+      _tab->draw();
+      _menu->draw();
+      _statusLine->draw();
+      _tabsLine->draw();
 
-      doupdate();
+      refresh();
       break;
 
     case Event::EV_QUIT:
@@ -124,15 +129,30 @@ int EventDispatcher::processEvent(const Event & e)
       _tab->getBuffer()->clear();
       _currentControl = (ControlObject *) _tab;
       break;
-    case Event::EV_FILE_OPEN:
-      clog << "EV_FILE_OPEN" << endl;
-//       _currentControl = (ControlObject *) _statusLine;
-//       _statusLine->printout("Enter file name: ");
-//       string answer = _statusLine->prompt();
-      _tab->getBuffer()->saveToFile("temp.file");
-      break;
     case Event::EV_FILE_SAVE:
+      clog << "EV_FILE_OPEN" << endl;
+
+      _currentControl = (ControlObject *) _statusLine;
+      
+      if(_tab->getBuffer()->saveToFile())
+        {
+          _statusLine->printout("Enter file name: ");
+          string answer = _statusLine->prompt(ControlPanel::cPanel.pKeyMgr);
+          _tab->getBuffer()->saveToFile(answer);
+        }
+      _currentControl = (ControlObject *) _tab;
+
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
+      break;
+    case Event::EV_FILE_OPEN:
       clog << "EV_FILE_SAVE" << endl;
+
+      _statusLine->printout("Enter file name: ");
+      {          
+        string answer = _statusLine->prompt(ControlPanel::cPanel.pKeyMgr);
+        _tab->getBuffer()->loadFromFile(answer);
+      }
+      
       break;
       
 

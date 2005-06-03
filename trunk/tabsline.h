@@ -4,13 +4,13 @@
 #include "control.h"
 #include "tab.h"
 
-#include <list>
+#include <vector>
 using namespace std;
 
 class TabsLine : public ControlObject
 {
  private:
-  list<Tab *> _tabs;
+  vector<Tab *> _tabs;
  public:
   TabsLine(EventDispatcher *);
   ~TabsLine();

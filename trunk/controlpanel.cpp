@@ -40,21 +40,20 @@ ControlPanel::ControlPanel()
   choices.push_back("Help");
   choices.push_back("Quit");
 
-  addControl(new Menu(pEd,choices));
   addControl(new StatusLine(pEd));
   addControl(new TabsLine(pEd));
+  addControl(new Menu(pEd,choices));
   addControl(new Tab(pEd));
-  
+  addControl(new Tab(pEd));
+ 
 
   // TODO: initialize event managers
 
-  KeyManager * pKeyMgr = new KeyManager();
+  pKeyMgr = new KeyManager();
   addEventManager(pKeyMgr);
   addEventManager(this);
   
   state = CP_WORKING;
-
-  allowEvents = true;
 }
 
 ControlPanel::~ControlPanel()
@@ -120,4 +119,3 @@ int ControlPanel::getState()
 {
   return state;
 }
-

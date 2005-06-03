@@ -4,6 +4,7 @@
 #include "eventdispatcher.h"
 #include "eventmanager.h"
 #include "eventhandler.h"
+#include "keymanager.h"
 
 class ControlPanel : public EventManager
 {
@@ -11,10 +12,10 @@ class ControlPanel : public EventManager
   enum states {CP_WORKING, CP_DONE};
  private:
   EventDispatcher * pEd;
+  KeyManager * pKeyMgr;
   list<ControlObject *> controls;
   list<EventManager *> eventMgrs;
   states state;
-  bool allowEvents;
 
  public:
 
@@ -33,6 +34,8 @@ class ControlPanel : public EventManager
   int pushEvent(const Event & ev) { events.push(ev); return 0; }
 
   static ControlPanel cPanel;
+
+  friend class EventDispatcher;
 };
 
 #endif // __CONTROLPANEL_H

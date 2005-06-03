@@ -1,5 +1,9 @@
 #include "control.h"
 
+#include <string>
+
+using namespace std;
+
 ControlObject::ControlObject(EventDispatcher * e)
 {
   pDisp = e;
@@ -22,4 +26,11 @@ RECT ControlObject::getBounds()
 void ControlObject::setBounds(RECT bounds)
 {
   this->bounds = bounds;
+}
+
+void ControlObject::printout(string what)
+{
+  werase(win);
+  wprintw(win, "%s", what.c_str());
+  wrefresh(win);
 }

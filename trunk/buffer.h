@@ -51,7 +51,14 @@ class Buffer
   //[eug end]  
 
   string getFileName() const { return _fileName; }
+  int getInsMode() { return st; }
+  int getCommandMode() { return command_mode; }
+  bool getModified() { return _modified; }
+
+  int saveToFile();
   int saveToFile(string fileName);
+
+  int loadFromFile(string filename);
   
   void clear();
 

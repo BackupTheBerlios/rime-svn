@@ -23,6 +23,7 @@ class ControlObject : public DrawableObject, public EventHandlerObject
   virtual ~ControlObject();
   virtual int processEvent(const Event &) = 0;
   virtual void draw() = 0;
+  virtual void printout(string what);
   
   RECT getBounds();
   void setBounds(RECT );

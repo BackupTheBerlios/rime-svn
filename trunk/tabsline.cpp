@@ -1,4 +1,5 @@
 #include "tabsline.h"
+#include "controlpanel.h"
 
 TabsLine::TabsLine(EventDispatcher * pEd) : ControlObject(pEd)
 {
@@ -12,26 +13,47 @@ TabsLine::~TabsLine()
   delwin(win);
 }
 
-int TabsLine::processEvent(const Event &)
+int TabsLine::processEvent(const Event & e)
 {
-  win = newwin(1, cols, 1, 0);
+  unsigned int x;
+  unsigned int c = 1;
 
+  switch(e.getType())
+    {
+    case  Event::EV_CLICK:
+      x = LOWORD(e.getValue());
+      clog << "X = " << x << endl;
+       for(unsigned int s = 0; s < 2; s++)
+         {
+           c += 5 + _tabs[s]->getBuffer()->getFileName().length();
+           clog << "C = " << c << "; ";
+           if (x <= c)
+             {
+              pDisp->setTab(_tabs[s]);
+              break;
+            }
+        }
+
+      ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
+
+      break;
+    default:
+      break;
+    }
   return 0;
 }
 
 void TabsLine::draw()
 {
-  int i = 0;
   werase(win);
   
   wmove(win, 0, 1);
 
-  wvline(win, ACS_VLINE, 1);
+  waddch(win, '|');
 
-  for(list<Tab *>::iterator it = _tabs.begin(); it != _tabs.end(); it++)
+  for(vector<Tab *>::iterator it = _tabs.begin(); it != _tabs.end(); it++)
     {
-      wprintw(win, " #%s# ", (*it)->getBuffer()->getFileName().c_str());
-      wvline(win, ACS_VLINE, 1);
+      wprintw(win, " #%s# |", (*it)->getBuffer()->getFileName().c_str());
     }
 
   wnoutrefresh(win);
@@ -39,5 +61,6 @@ void TabsLine::draw()
 
 void TabsLine::addTab(Tab * t)
 {
-  _tabs.push_back(t);
+  if(find(_tabs.begin(), _tabs.end(), t) == _tabs.end())
+    _tabs.push_back(t);
 }

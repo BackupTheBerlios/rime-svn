@@ -39,16 +39,17 @@ void KeyManager::start()
   while(true)
     {
       int ch = getch();
-
+          
       switch(ch)
         {
         case KEY_MOUSE:
           getmouse(&mEvent);
-	  if ( mEvent.bstate & BUTTON1_CLICKED )
-	  {
+          if ( mEvent.bstate & BUTTON1_CLICKED )
+            {
+              clog << "X = " << mEvent.x << ", Y = " << mEvent.y << endl;
               ch = MAKEINT(mEvent.x, mEvent.y);
-	      ev = Event(Event::EV_CLICK, ch);
-	}
+              ev = Event(Event::EV_CLICK, ch);
+            }
           break;
         default:
           ev = Event(Event::EV_CHARACTER, ch);       

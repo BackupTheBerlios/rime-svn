@@ -32,7 +32,6 @@ int Buffer::add(int ch)
 {
   vector<char>::iterator itt;
 
-  _modified = true;
 
   switch(ch)
     {
@@ -42,65 +41,66 @@ int Buffer::add(int ch)
 
       if(cursor.x > lines[cursor.y].size())
         cursor.x = lines[cursor.y].size();
-      _modified = false;
       break;
     case KEY_DOWN:
       if(cursor.y + 1 < lines.size())
         cursor.y++;
       if(cursor.x > lines[cursor.y].size())
         cursor.x = lines[cursor.y].size();
-      _modified = false;
       break;
     case KEY_LEFT:
       if(cursor.x > 0)
         cursor.x--;
-      _modified = false;
       break;
     case KEY_RIGHT:
       if(cursor.x < lines[cursor.y].size())
         cursor.x++;
-      _modified = false;
       break;
     case KEY_HOME:
       cursor.x = 0;
-      _modified = false;
       break;
     case KEY_END:
       cursor.x = lines[cursor.y].size();
-      _modified = false;
       break;
       
         
     case KEY_DC:
 	  key_del() ;
+      _modified = true;
       break;
 
     case '\t':
 	  key_tab() ;
+      _modified = true;
       break;
 
     case 27:
       key_esc() ;
+      _modified = true;
       break;
 
     case 'M':
     case 'm':
       key_m( ch ) ;
+      _modified = true;
       break ;
 
     case 'D':
     case 'd':
       key_d( ch ) ;
+      _modified = true;
       break;
 
     case 'C':
     case 'c':
       key_c( ch , OFF ) ; // del_mode == OFF
+      _modified = true;
       break;
 
     case 'X': // inca neimplementat ( ! )
     case 'x':
       key_c( ch , ON ) ; // del_mode == ON ;
+      _modified = true;
       break;
 
     case KEY_BACKSPACE:  
@@ -111,22 +111,32 @@ int Buffer::add(int ch)
           advance(itt, cursor.x - 1);
           lines[cursor.y].erase(itt);
           cursor.x--;
+          _modified = true;
         }
       break;
 
     case 13:
-      key_13() ;
+      if(command_mode == OFF)
+        {
+          key_13() ;
+          _modified = true;
+        }
       break;
 
     case KEY_IC:
-      key_ins() ;
+      if(command_mode == OFF)
+        {
+          key_ins() ;
+          _modified = true;
+        }
       break;
 
     default:
-      if( isprint(ch) )
-      {
-          aux_add_ch( ch ) ;
-      }
+      if(command_mode == OFF && isprint(ch))
+        {
+          aux_add_ch(ch) ;
+          _modified = true;
+        }
       break;
     }
   return 0;
@@ -136,52 +146,45 @@ int Buffer::add(int ch)
 void Buffer::key_del()
 {
   vector<char>::iterator itt;
-  int i = 0 ;
+  unsigned int i = 0 ;
 
-if( ! lines.empty() )
-{     
+  if( ! lines.empty() )
+    {     
 
- if( ! lines[ cursor.y ].empty( )  )
- {
- 	 itt = lines[cursor.y].begin();
- 	 advance(itt, cursor.x);
-    	 if(  itt < lines[cursor.y].end()  )
+      if( ! lines[ cursor.y ].empty( )  )
+        {
+          itt = lines[cursor.y].begin();
+          advance(itt, cursor.x);
+          if(  itt < lines[cursor.y].end()  )
     		lines[cursor.y].erase(itt,itt+1);
- }   
+        }   
  
  
- if( lines.size() > 1 )
- {
- 
- 	if( cursor.x  == ( lines[cursor.y].size() )  )
- 	{
-	
-	    if(  ( lines.begin() + cursor.y +1 )  < lines.end()  )
-	   {
-   		for( i = 0 ; i < lines[cursor.y+1].size() ; i++  )
-   		{
-     			lines[cursor.y].push_back( lines[cursor.y+1][i]  );
-   		}       
+      if( lines.size() > 1 )
+        {
+          if( cursor.x  == ( lines[cursor.y].size() )  )
+            {
+              if(  ( lines.begin() + cursor.y +1 )  < lines.end()  )
+                {
+                  for( i = 0 ; i < lines[cursor.y+1].size() ; i++  )
+                    {
+                      lines[cursor.y].push_back( lines[cursor.y+1][i]  );
+                    }       
 		
-	   
-     		lines.erase( lines.begin() + cursor.y+1 , lines.begin() + cursor.y +2 );  
-	  }	
-				
- 	}   
-   }	
-   
-  }
-  
-  
+                  lines.erase( lines.begin() + cursor.y+1 , lines.begin() + cursor.y +2 );  
+                }	
+            }   
+        }	
+    }
 }
 
 
 void Buffer::key_ins()
 {
-  if( st == OVR  )
-    st = INS ;
+  if(st == OVR)
+    st = INS;
   else
-    st = OVR ;
+    st = OVR;
 }
 
 
@@ -218,7 +221,7 @@ void Buffer::key_tab()
 }
 
 
-void Buffer::key_c( char ch, int del_mode ) // del_mode in {ON , OFF}
+void Buffer::key_c( char ch, int ) // del_mode in {ON , OFF}
 {
   unsigned int i, j;
 
@@ -316,7 +319,7 @@ void Buffer::key_c( char ch, int del_mode ) // del_mode in {ON , OFF}
 }
 
 
-void Buffer::key_x( char ch )
+void Buffer::key_x( char )
 {
 
 }
@@ -327,9 +330,9 @@ void Buffer::key_d( char ch )
   if( command_mode == ON  )
     {
       if( ! lines.empty() )
-      {
-      		lines.erase( lines.begin()+ cursor.y  , lines.begin()+ cursor.y+1  );
-      }
+        {
+          lines.erase( lines.begin()+ cursor.y  , lines.begin()+ cursor.y+1  );
+        }
     }
   else
     {
@@ -377,11 +380,11 @@ void Buffer::key_m(char ch)
   else
     {
       if( mark_set == ON  )
-      {
+        {
           mark_set = OFF;
           mark_end_x = cursor.x ;
           mark_end_y = cursor.y ;
-      }
+        }
     }
 }
 
@@ -429,6 +432,12 @@ void Buffer::clear()
   lines.clear();
 }
 
+
+int Buffer::saveToFile()
+{
+  return saveToFile("");
+}
+
 int Buffer::saveToFile(string fileName)
 {
   if(fileName != "")
@@ -448,8 +457,38 @@ int Buffer::saveToFile(string fileName)
           f.put('\n');
         }
 
+      _modified = false;
       return 0;
     }
 
   return -1;
+}
+
+
+int Buffer::loadFromFile(string filename)
+{
+  char buf[1000];
+  lines.clear();
+
+  ifstream f(filename.c_str());
+
+  if(!f.is_open())
+    return -1;
+
+  _fileName = filename;
+
+  int i = 0;
+
+  while(!f.eof())
+    {
+      lines.push_back(vector<char> (0));
+      f.getline(buf, 1000);
+      for(unsigned j = 0; j < strlen(buf); j++)
+        {
+          lines[i].push_back(buf[j]); 
+        }
+      i++;
+    }
+
+  return 0;
 }

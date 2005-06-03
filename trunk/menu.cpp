@@ -70,9 +70,7 @@ int Menu::processEvent(const Event &ev)
           if( (stare == "File")/* || (item_index(current_item(pMyMenu))==0)*/ )///accesare File din meniul principal
             {
               vector<string> choices;
-
               choices.clear();
-				
               choices.push_back("New ");								
               choices.push_back("Open");
               choices.push_back("Save");
@@ -179,9 +177,16 @@ int Menu::processEvent(const Event &ev)
         }
       break;
     case  Event::EV_CLICK:
-      x = HIWORD(ev.getValue());
-      x = x / 4;
-      cout << "s-a accesat meniul " << x << endl; 
+      x = LOWORD(ev.getValue());
+      x = x / 6;
+      if ( x > 4) 
+	x = 1;
+	menu_driver(pMyMenu , REQ_FIRST_ITEM);
+	
+	for ( int k = 0 ; k < x; k++)
+	    menu_driver(pMyMenu , REQ_RIGHT_ITEM);
+
+	ControlPanel::cPanel.pushEvent(Event(Event::EV_CHARACTER, 13));
       break;
     default:
       break;

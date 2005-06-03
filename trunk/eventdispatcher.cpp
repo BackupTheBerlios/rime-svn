@@ -62,7 +62,7 @@ int EventDispatcher::processEvent(const Event & e)
       break;
     case Event::EV_CLICK:
       clog << "Click detected!" << endl;
-      switch(LOWORD(e.getValue())) // y
+      switch(HIWORD(e.getValue())) // y
         {
         case 0:
 	  _currentControl = _menu;

@@ -91,6 +91,7 @@ int EventDispatcher::processEvent(const Event & e)
       
     case Event::EV_EDIT:
       clog << "EV_EDIT" << endl;
+      
       break;
       
     case Event::EV_HELP:

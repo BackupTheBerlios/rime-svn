@@ -8,6 +8,7 @@
 #include "menu.h"
 #include "control.h"
 #include "controlpanel.h"
+#include "buffer.h"
 
 Menu::Menu(EventDispatcher * pEd, vector<string> choices) : ControlObject(pEd)
 {
@@ -85,12 +86,33 @@ int Menu::processEvent(const Event &ev)
 
               return 0;
             }
-          if( (stare == "Edit")/* || (item_index(current_item(pMyMenu))==1)*/ )
+        
+	  if( (stare == "Edit")/* || (item_index(current_item(pMyMenu))==1)*/ )
             {
-              ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
+              //ControlPanel::cPanel.pushEvent(Event(Event::EV_EDIT));
+	      Buffer *buf = new Buffer();
+	      buf->add(27);///intrat in modul comanda din clasa Buffer
+	      vector<string> choices;
+
+              choices.clear();
+				
+              choices.push_back("Mark");								
+              choices.push_back("Copy");
+              choices.push_back("Past");
+              choices.push_back("<---");
+								
+              destroyMenu();
+
+              buildMenu(choices);
+              
+              wrefresh(win);
+	      refresh();
+
               return 0;
+             // return 0;
             }    
-          if( (stare == "Help")/* || (item_index(current_item(pMyMenu))==2)*/ )
+        
+	  if( (stare == "Help")/* || (item_index(current_item(pMyMenu))==2)*/ )
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_HELP));
               return 0;
@@ -123,6 +145,36 @@ int Menu::processEvent(const Event &ev)
           
           buildMenu(choices);
 
+	    
+	  if(stare == "Mark")
+	    {
+		Buffer *buf = new Buffer();
+		buf->add('m');///trimit caracterul 'm' la buffer in modul comanda --> Mark
+	    }
+	  if(stare == "Copy")
+	    {
+		Buffer *buf = new Buffer();
+		buf->add(99);///trimit caracterul 'c' la buffer in modul comanda --> Copy
+	    }    
+	  if(stare == "Past")
+	    {
+	    }
+	  if(stare == "<---")
+	    {
+		Buffer *buf = new Buffer();
+		buf->add(27); ///iesire din modul comanda
+		vector<string> choices;
+
+                choices.push_back("File");
+                choices.push_back("Edit");		
+                choices.push_back("Help");
+                choices.push_back("Quit");
+	      
+                destroyMenu();
+
+                buildMenu(choices);
+		refresh();
+	    }
           break;
         }
       break;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iterator>
+#include <fstream>
 
 using namespace std;
 
@@ -22,12 +23,16 @@ Buffer::Buffer() : lines(1)
   mark_end_y = 0       ;
   mark_ready = 0       ;
   command_mode = OFF   ;
+
+  _modified = false;
 }
 
 
 int Buffer::add(int ch)
 {
   vector<char>::iterator itt;
+
+  _modified = true;
 
   switch(ch)
     {
@@ -37,26 +42,32 @@ int Buffer::add(int ch)
 
       if(cursor.x > lines[cursor.y].size())
         cursor.x = lines[cursor.y].size();
+      _modified = false;
       break;
     case KEY_DOWN:
       if(cursor.y + 1 < lines.size())
         cursor.y++;
       if(cursor.x > lines[cursor.y].size())
         cursor.x = lines[cursor.y].size();
+      _modified = false;
       break;
     case KEY_LEFT:
       if(cursor.x > 0)
         cursor.x--;
+      _modified = false;
       break;
     case KEY_RIGHT:
       if(cursor.x < lines[cursor.y].size())
         cursor.x++;
+      _modified = false;
       break;
     case KEY_HOME:
       cursor.x = 0;
+      _modified = false;
       break;
     case KEY_END:
       cursor.x = lines[cursor.y].size();
+      _modified = false;
       break;
       
         
@@ -92,12 +103,8 @@ int Buffer::add(int ch)
       key_c( ch , ON ) ; // del_mode == ON ;
       break;
 
-<<<<<<< .mine
     case KEY_BACKSPACE:  
     case '\b':
-=======
-    case KEY_BACKSPACE:
->>>>>>> .r56
       if(cursor.x > 0)
         {
           itt = lines[cursor.y].begin();
@@ -414,3 +421,35 @@ void Buffer::aux_add_ch(char ch)
 }
 
 // [eug] end
+
+void Buffer::clear()
+{
+  cursor.x = 0;
+  cursor.y = 0;
+  lines.clear();
+}
+
+int Buffer::saveToFile(string fileName)
+{
+  if(fileName != "")
+    {
+      _fileName = fileName;
+    }
+
+  if(_fileName != "")
+    {
+      ofstream f(fileName.c_str());
+      for(unsigned int i = 0; i < lines.size(); i++)
+        {
+          for(unsigned int j = 0; j < lines[i].size(); j++)
+            {
+              f.put(lines[i][j]);
+            }
+          f.put('\n');
+        }
+
+      return 0;
+    }
+
+  return -1;
+}

@@ -18,6 +18,8 @@ Menu::Menu(EventDispatcher * pEd, vector<string> choices) : ControlObject(pEd)
   keypad(win,TRUE);
 
   buildMenu(choices);
+
+  draw();
 }
 
 Menu::~Menu()
@@ -37,10 +39,13 @@ void Menu::draw()
 
 int Menu::processEvent(const Event &ev)
 {
+  int x;
+  
   clog << "Got an event" << endl;
   
-  if(ev.getType() == Event::EV_CHARACTER)
+  switch(ev.getType())
     {
+    case Event::EV_CHARACTER:
       clog << "The event is " << ev.getValue() << " != " << KEY_RIGHT << " " << KEY_LEFT << " " << KEY_ENTER << endl;
       switch(ev.getValue())
         {
@@ -96,47 +101,42 @@ int Menu::processEvent(const Event &ev)
           if(stare == "New ")///File->New
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_NEW));
-              return 0;	      
             }
-
-          if(stare == "Open")///File->Open
+          else if(stare == "Open")///File->Open
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_OPEN));
-              return 0;	      
             }
-
-          if(stare == "Save")///File->Save
+          else if(stare == "Save")///File->Save
             {
               ControlPanel::cPanel.pushEvent(Event(Event::EV_FILE_SAVE));
               return 0;	      
             }
 
-          if(stare == "Back")///iesire din submeniul File si revenire la meniul principal
-            {
-              vector<string> choices;
+          vector<string> choices;
 
-              choices.push_back("File");
-              choices.push_back("Edit");		
-              choices.push_back("Help");
-              choices.push_back("Quit");
+          choices.push_back("File");
+          choices.push_back("Edit");		
+          choices.push_back("Help");
+          choices.push_back("Quit");
 	      
-              destroyMenu();
+          destroyMenu();
+          
+          buildMenu(choices);
 
-              buildMenu(choices);
-            }
           break;
         }
-    }
-    else if(ev.getType() == Event::EV_CLICK)
-    {
-	int x = HIWORD(ev.getValue());
-	x = x / 4;
-	cout << "s-a accesat meniul " << x << endl; 
-	
+      break;
+    case  Event::EV_CLICK:
+      x = HIWORD(ev.getValue());
+      x = x / 4;
+      cout << "s-a accesat meniul " << x << endl; 
+      break;
+    default:
+      break;
     }
 
   ControlPanel::cPanel.pushEvent(Event(Event::EV_REDRAW));
-  
+
   return 0;
 }
 

@@ -2,6 +2,7 @@
 
 #include "statusline.h"
 #include "eventdispatcher.h"
+#include "tab.h"
 
 StatusLine::StatusLine(EventDispatcher * pEd) : ControlObject(pEd)
 {
@@ -18,7 +19,8 @@ StatusLine::~StatusLine()
 void StatusLine::draw()
 {
   werase(win);
-  wprintw(win, "Status!");
+  
+  wprintw(win, "[%s]", pDisp->getTab()->getBuffer()->getFileName().c_str());
   wnoutrefresh(win);
 }
 

@@ -52,9 +52,9 @@ ControlPanel::ControlPanel()
   addEventManager(pKeyMgr);
   addEventManager(this);
   
-  pushEvent(Event(Event::EV_REDRAW));
-
   state = CP_WORKING;
+
+  allowEvents = true;
 }
 
 ControlPanel::~ControlPanel()
@@ -81,7 +81,10 @@ void ControlPanel::start()
 {
   Event ev;
 
-    cout << "state = " << state << endl;
+  pushEvent(Event(Event::EV_REDRAW));
+
+  refresh();
+
   while(state != CP_DONE)
     {
       for(list<EventManager*>::iterator it = eventMgrs.begin(); it != eventMgrs.end(); it++)
@@ -117,3 +120,4 @@ int ControlPanel::getState()
 {
   return state;
 }
+

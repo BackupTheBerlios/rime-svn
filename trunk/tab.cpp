@@ -30,6 +30,8 @@ Tab::Tab(EventDispatcher * pEd) : ControlObject(pEd)
      }
 
    pEd->setTab((ControlObject *) this);
+
+   draw();
 }
 
 Tab::~Tab()

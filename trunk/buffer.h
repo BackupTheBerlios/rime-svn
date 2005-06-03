@@ -22,6 +22,7 @@ class Buffer
  private:
   POINT cursor;
   string _fileName;
+  bool _modified;
   
   vector<vector<char> > lines;
 
@@ -50,6 +51,9 @@ class Buffer
   //[eug end]  
 
   string getFileName() const { return _fileName; }
+  int saveToFile(string fileName);
+  
+  void clear();
 
   friend class Tab;
 };

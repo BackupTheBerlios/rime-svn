@@ -120,9 +120,15 @@ int EventDispatcher::processEvent(const Event & e)
       
     case Event::EV_FILE_NEW:
       clog << "EV_FILE_NEW" << endl;
+      _tab->getBuffer()->clear();
+      _currentControl = (ControlObject *) _tab;
       break;
     case Event::EV_FILE_OPEN:
       clog << "EV_FILE_OPEN" << endl;
+//       _currentControl = (ControlObject *) _statusLine;
+//       _statusLine->printout("Enter file name: ");
+//       string answer = _statusLine->prompt();
+      _tab->getBuffer()->saveToFile("temp.file");
       break;
     case Event::EV_FILE_SAVE:
       clog << "EV_FILE_SAVE" << endl;
@@ -174,6 +180,11 @@ void EventDispatcher::setTab(ControlObject * tab)
 {
   _tab = (Tab *) tab;
   _tabsLine->addTab(_tab);
+}
+
+Tab * EventDispatcher::getTab()
+{
+  return _tab;
 }
 
 

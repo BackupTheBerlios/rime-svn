@@ -39,6 +39,8 @@ class  EventDispatcher : public EventHandlerObject
   void setTab(ControlObject *);
   void setTabsLine(ControlObject *);
   void setStatusLine(ControlObject *);
+
+  Tab * getTab();
 };
 
 #endif // __EVENTDISPATCHER_H

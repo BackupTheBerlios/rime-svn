@@ -14,6 +14,7 @@ class ControlPanel : public EventManager
   list<ControlObject *> controls;
   list<EventManager *> eventMgrs;
   states state;
+  bool allowEvents;
 
  public:
 
